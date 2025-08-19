@@ -1,0 +1,1049 @@
+2022-06-07 13:14:26 | INFO | fairseq_cli.train | Namespace(activation_dropout=0.0, activation_fn='relu', adam_betas='(0.9, 0.98)', adam_eps=1e-08, adaptive_input=False, adaptive_softmax_cutoff=None, adaptive_softmax_dropout=0, all_gather_list_size=16384, arch='transformer', attention_dropout=0.0, batch_size=None, batch_size_valid=None, best_checkpoint_metric='bleu', bf16=False, bpe=None, broadcast_buffers=False, bucket_cap_mb=25, checkpoint_shard_count=1, checkpoint_suffix='', clip_norm=0.0, cpu=False, criterion='label_smoothed_cross_entropy', cross_self_attention=False, curriculum=0, data='data-bin/data.tokenized.en-fa', data_buffer_size=10, dataset_impl=None, ddp_backend='c10d', decoder_attention_heads=8, decoder_embed_dim=512, decoder_embed_path=None, decoder_ffn_embed_dim=2048, decoder_input_dim=512, decoder_layerdrop=0, decoder_layers=6, decoder_layers_to_keep=None, decoder_learned_pos=False, decoder_normalize_before=False, decoder_output_dim=512, device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method=None, distributed_no_spawn=False, distributed_num_procs=1, distributed_port=-1, distributed_rank=0, distributed_world_size=1, distributed_wrapper='DDP', dropout=0.3, empty_cache_freq=0, encoder_attention_heads=8, encoder_embed_dim=512, encoder_embed_path=None, encoder_ffn_embed_dim=2048, encoder_layerdrop=0, encoder_layers=6, encoder_layers_to_keep=None, encoder_learned_pos=False, encoder_normalize_before=False, eval_bleu=True, eval_bleu_args='{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}', eval_bleu_detok='moses', eval_bleu_detok_args=None, eval_bleu_print_samples=True, eval_bleu_remove_bpe='@@ ', eval_tokenized_bleu=False, fast_stat_sync=False, find_unused_parameters=False, finetune_from_model=None, fix_batches_to_gpus=False, fixed_validation_seed=None, fp16=False, fp16_init_scale=128, fp16_no_flatten_grads=False, fp16_scale_tolerance=0.0, fp16_scale_window=None, gen_subset='test', ignore_prefix_size=0, keep_best_checkpoints=-1, keep_interval_updates=-1, keep_last_epochs=-1, label_smoothing=0.1, layernorm_embedding=False, left_pad_source='True', left_pad_target='False', load_alignments=False, localsgd_frequency=3, log_format=None, log_interval=100, lr=[0.0005], lr_scheduler='inverse_sqrt', max_epoch=50, max_source_positions=1024, max_target_positions=1024, max_tokens=4096, max_tokens_valid=4096, max_update=0, maximize_best_checkpoint_metric=True, memory_efficient_bf16=False, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=-1.0, model_parallel_size=1, no_cross_attention=False, no_epoch_checkpoints=False, no_last_checkpoints=False, no_progress_bar=False, no_save=False, no_save_optimizer_state=False, no_scale_embedding=False, no_seed_provided=False, no_token_positional_embeddings=False, nprocs_per_node=1, num_batch_buckets=0, num_shards=1, num_workers=1, optimizer='adam', optimizer_overrides='{}', patience=10, pipeline_balance=None, pipeline_checkpoint='never', pipeline_chunks=0, pipeline_decoder_balance=None, pipeline_decoder_devices=None, pipeline_devices=None, pipeline_encoder_balance=None, pipeline_encoder_devices=None, pipeline_model_parallel=False, profile=False, quant_noise_pq=0, quant_noise_pq_block_size=8, quant_noise_scalar=0, quantization_config_path=None, report_accuracy=False, required_batch_size_multiple=8, required_seq_len_multiple=1, reset_dataloader=False, reset_lr_scheduler=False, reset_meters=False, reset_optimizer=False, restore_file='checkpoint_last.pt', save_dir='checkpoints', save_interval=1, save_interval_updates=0, scoring='bleu', seed=1, sentence_avg=False, shard_id=0, share_all_embeddings=False, share_decoder_input_output_embed=True, skip_invalid_size_inputs_valid_test=False, slowmo_algorithm='LocalSGD', slowmo_momentum=None, source_lang=None, stop_time_hours=0, target_lang=None, task='translation', tensorboard_logdir=None, threshold_loss_scale=None, tie_adaptive_weights=False, tokenizer=None, tpu=False, train_subset='train', truncate_source=False, update_freq=[1], upsample_primary=1, use_bmuf=False, use_old_adam=False, user_dir=None, valid_subset='valid', validate_after_updates=0, validate_interval=1, validate_interval_updates=0, warmup_init_lr=-1, warmup_updates=4000, weight_decay=0.0001, zero_sharding='none')
+2022-06-07 13:14:26 | INFO | fairseq.tasks.translation | [en] dictionary: 33040 types
+2022-06-07 13:14:26 | INFO | fairseq.tasks.translation | [fa] dictionary: 44136 types
+2022-06-07 13:14:26 | INFO | fairseq.data.data_utils | loaded 400 examples from: data-bin/data.tokenized.en-fa/valid.en-fa.en
+2022-06-07 13:14:26 | INFO | fairseq.data.data_utils | loaded 400 examples from: data-bin/data.tokenized.en-fa/valid.en-fa.fa
+2022-06-07 13:14:26 | INFO | fairseq.tasks.translation | data-bin/data.tokenized.en-fa valid en-fa 400 examples
+2022-06-07 13:14:28 | INFO | fairseq_cli.train | TransformerModel(
+  (encoder): TransformerEncoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(33040, 512, padding_idx=1)
+    (embed_positions): SinusoidalPositionalEmbedding()
+    (layers): ModuleList(
+      (0): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+  (decoder): TransformerDecoder(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(44136, 512, padding_idx=1)
+    (embed_positions): SinusoidalPositionalEmbedding()
+    (layers): ModuleList(
+      (0): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerDecoderLayer(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (output_projection): Linear(in_features=512, out_features=44136, bias=False)
+  )
+)
+2022-06-07 13:14:28 | INFO | fairseq_cli.train | task: translation (TranslationTask)
+2022-06-07 13:14:28 | INFO | fairseq_cli.train | model: transformer (TransformerModel)
+2022-06-07 13:14:28 | INFO | fairseq_cli.train | criterion: label_smoothed_cross_entropy (LabelSmoothedCrossEntropyCriterion)
+2022-06-07 13:14:28 | INFO | fairseq_cli.train | num. model params: 83652608 (num. trained: 83652608)
+2022-06-07 13:14:40 | INFO | fairseq.trainer | detected shared parameter: decoder.embed_tokens.weight <- decoder.output_projection.weight
+2022-06-07 13:14:40 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2022-06-07 13:14:40 | INFO | fairseq.utils | rank   0: capabilities =  7.5  ; total memory = 14.756 GB ; name = Tesla T4                                
+2022-06-07 13:14:40 | INFO | fairseq.utils | ***********************CUDA enviroments for all 1 workers***********************
+2022-06-07 13:14:40 | INFO | fairseq_cli.train | training on 1 devices (GPUs/TPUs)
+2022-06-07 13:14:40 | INFO | fairseq_cli.train | max tokens per GPU = 4096 and max sentences per GPU = None
+2022-06-07 13:14:40 | INFO | fairseq.trainer | no existing checkpoint found checkpoints/checkpoint_last.pt
+2022-06-07 13:14:40 | INFO | fairseq.trainer | loading train data for epoch 1
+2022-06-07 13:14:40 | INFO | fairseq.data.data_utils | loaded 30000 examples from: data-bin/data.tokenized.en-fa/train.en-fa.en
+2022-06-07 13:14:41 | INFO | fairseq.data.data_utils | loaded 30000 examples from: data-bin/data.tokenized.en-fa/train.en-fa.fa
+2022-06-07 13:14:41 | INFO | fairseq.tasks.translation | data-bin/data.tokenized.en-fa train en-fa 30000 examples
+2022-06-07 13:14:41 | INFO | fairseq.trainer | NOTE: your device may support faster training with --fp16
+epoch 001:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:14:41 | INFO | fairseq.trainer | begin training epoch 1
+/usr/local/lib/python3.7/dist-packages/fairseq/utils.py:342: UserWarning: amp_C fused kernels unavailable, disabling multi_tensor_l2norm; you may get better performance by installing NVIDIA's apex library
+  "amp_C fused kernels unavailable, disabling multi_tensor_l2norm; "
+epoch 001:  99% 176/177 [01:27<00:00,  1.91it/s, loss=14.636, nll_loss=14.464, ppl=22605.2, wps=6092.4, ups=2.07, wpb=2917.1, bsz=161, num_updates=100, lr=1.25e-05, gnorm=4.198, train_wall=48, wall=48]2022-06-07 13:16:08 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 001 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]/usr/local/lib/python3.7/dist-packages/fairseq/search.py:140: UserWarning: __floordiv__ is deprecated, and its behavior will change in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values. To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor').
+  beams_buf = indices_buf // vocab_size
+/usr/local/lib/python3.7/dist-packages/fairseq/sequence_generator.py:651: UserWarning: __floordiv__ is deprecated, and its behavior will change in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values. To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor').
+  unfin_idx = idx // beam_size
+2022-06-07 13:16:09 | INFO | fairseq.tasks.translation | example hypothesis: ..
+2022-06-07 13:16:09 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 001 | valid on 'valid' subset:  33% 1/3 [00:00<00:01,  1.39it/s]2022-06-07 13:16:09 | INFO | fairseq.tasks.translation | example hypothesis: ...
+2022-06-07 13:16:09 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 001 | valid on 'valid' subset:  67% 2/3 [00:01<00:00,  1.62it/s]2022-06-07 13:16:10 | INFO | fairseq.tasks.translation | example hypothesis: .....
+2022-06-07 13:16:10 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 001 | valid on 'valid' subset: 100% 3/3 [00:01<00:00,  1.63it/s]
+                                                                      2022-06-07 13:16:10 | INFO | valid | epoch 001 | valid on 'valid' subset | loss 12.473 | nll_loss 12.048 | ppl 4233.66 | bleu 0 | wps 4109.1 | wpb 2166.7 | bsz 133.3 | num_updates 177
+2022-06-07 13:16:10 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:16:24 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint1.pt (epoch 1 @ 177 updates, score 0.0) (writing took 13.974378308000269 seconds)
+2022-06-07 13:16:24 | INFO | fairseq_cli.train | end of epoch 1 (average epoch stats below)
+2022-06-07 13:16:24 | INFO | train | epoch 001 | loss 13.957 | nll_loss 13.709 | ppl 13386.8 | wps 5052.4 | ups 1.71 | wpb 2940.7 | bsz 169.5 | num_updates 177 | lr 2.2125e-05 | gnorm 3.215 | train_wall 87 | wall 104
+epoch 002:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:16:24 | INFO | fairseq.trainer | begin training epoch 2
+epoch 002:  99% 176/177 [01:30<00:00,  2.10it/s, loss=11.891, nll_loss=11.395, ppl=2692.51, wps=5734.3, ups=1.92, wpb=2988.7, bsz=168.6, num_updates=300, lr=3.75e-05, gnorm=1.947, train_wall=52, wall=168]2022-06-07 13:17:55 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 002 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:17:56 | INFO | fairseq.tasks.translation | example hypothesis: .
+2022-06-07 13:17:56 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 002 | valid on 'valid' subset:  33% 1/3 [00:00<00:01,  1.57it/s]2022-06-07 13:17:57 | INFO | fairseq.tasks.translation | example hypothesis: و و و و و و و و و و و و و و و و و و و و و و و و و.
+2022-06-07 13:17:57 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 002 | valid on 'valid' subset:  67% 2/3 [00:01<00:00,  1.18it/s]2022-06-07 13:17:59 | INFO | fairseq.tasks.translation | example hypothesis: در در ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ، ،
+2022-06-07 13:17:59 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 002 | valid on 'valid' subset: 100% 3/3 [00:03<00:00,  1.32s/it]
+                                                                      2022-06-07 13:17:59 | INFO | valid | epoch 002 | valid on 'valid' subset | loss 11.368 | nll_loss 10.688 | ppl 1649.34 | bleu 0.03 | wps 1641.4 | wpb 2166.7 | bsz 133.3 | num_updates 354 | best_bleu 0.03
+2022-06-07 13:17:59 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:18:12 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint2.pt (epoch 2 @ 354 updates, score 0.03) (writing took 13.524920101000134 seconds)
+2022-06-07 13:18:12 | INFO | fairseq_cli.train | end of epoch 2 (average epoch stats below)
+2022-06-07 13:18:12 | INFO | train | epoch 002 | loss 11.81 | nll_loss 11.296 | ppl 2513.71 | wps 4810.5 | ups 1.64 | wpb 2940.7 | bsz 169.5 | num_updates 354 | lr 4.425e-05 | gnorm 1.959 | train_wall 91 | wall 212
+epoch 003:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:18:12 | INFO | fairseq.trainer | begin training epoch 3
+epoch 003:  99% 176/177 [01:30<00:00,  1.94it/s, loss=10.976, nll_loss=10.278, ppl=1241.77, wps=5762.7, ups=1.92, wpb=3003.4, bsz=171.5, num_updates=500, lr=6.25e-05, gnorm=1.659, train_wall=52, wall=287]2022-06-07 13:19:44 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 003 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:19:45 | INFO | fairseq.tasks.translation | example hypothesis: این این این این این این در در در در در در در در در در در در در در در در در در در در
+2022-06-07 13:19:45 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 003 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.39s/it]2022-06-07 13:19:47 | INFO | fairseq.tasks.translation | example hypothesis: این در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در
+2022-06-07 13:19:47 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 003 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.85s/it]2022-06-07 13:19:50 | INFO | fairseq.tasks.translation | example hypothesis: این در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در در
+2022-06-07 13:19:50 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 003 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.33s/it]
+                                                                      2022-06-07 13:19:50 | INFO | valid | epoch 003 | valid on 'valid' subset | loss 11.019 | nll_loss 10.289 | ppl 1250.78 | bleu 0.03 | wps 934.4 | wpb 2166.7 | bsz 133.3 | num_updates 531 | best_bleu 0.03
+2022-06-07 13:19:50 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:20:03 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint3.pt (epoch 3 @ 531 updates, score 0.03) (writing took 13.292839555999308 seconds)
+2022-06-07 13:20:03 | INFO | fairseq_cli.train | end of epoch 3 (average epoch stats below)
+2022-06-07 13:20:03 | INFO | train | epoch 003 | loss 11.011 | nll_loss 10.322 | ppl 1279.65 | wps 4686.3 | ups 1.59 | wpb 2940.7 | bsz 169.5 | num_updates 531 | lr 6.6375e-05 | gnorm 1.827 | train_wall 91 | wall 323
+epoch 004:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:20:03 | INFO | fairseq.trainer | begin training epoch 4
+epoch 004:  99% 176/177 [01:30<00:00,  2.03it/s, loss=10.758, nll_loss=10.005, ppl=1027.54, wps=5795.6, ups=1.92, wpb=3017.7, bsz=172.5, num_updates=700, lr=8.75e-05, gnorm=1.65, train_wall=52, wall=410]2022-06-07 13:21:35 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 004 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:21:36 | INFO | fairseq.tasks.translation | example hypothesis: او به او را به او را به او.
+2022-06-07 13:21:36 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 004 | valid on 'valid' subset:  33% 1/3 [00:01<00:03,  1.60s/it]2022-06-07 13:21:38 | INFO | fairseq.tasks.translation | example hypothesis: در در در در در در این این این این این در این این این این این این این این این این این این این این این این این این این این این این این این ، و در این این این
+2022-06-07 13:21:38 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 004 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.84s/it]2022-06-07 13:21:41 | INFO | fairseq.tasks.translation | example hypothesis: در در این این این این این این این این این این این این این این این این این این این این از این از این این این این این این این این از این از این از این از این از این از این از این این این این از این از این از این این این از این از این از این از این از این از این از
+2022-06-07 13:21:41 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 004 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.28s/it]
+                                                                      2022-06-07 13:21:41 | INFO | valid | epoch 004 | valid on 'valid' subset | loss 10.615 | nll_loss 9.821 | ppl 904.62 | bleu 0.32 | wps 985.4 | wpb 2166.7 | bsz 133.3 | num_updates 708 | best_bleu 0.32
+2022-06-07 13:21:41 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:21:55 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint4.pt (epoch 4 @ 708 updates, score 0.32) (writing took 13.545580961999804 seconds)
+2022-06-07 13:21:55 | INFO | fairseq_cli.train | end of epoch 4 (average epoch stats below)
+2022-06-07 13:21:55 | INFO | train | epoch 004 | loss 10.788 | nll_loss 10.041 | ppl 1053.46 | wps 4672.7 | ups 1.59 | wpb 2940.7 | bsz 169.5 | num_updates 708 | lr 8.85e-05 | gnorm 1.731 | train_wall 91 | wall 434
+epoch 005:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:21:55 | INFO | fairseq.trainer | begin training epoch 5
+epoch 005:  99% 176/177 [01:30<00:00,  1.86it/s, loss=10.607, nll_loss=9.828, ppl=908.9, wps=4145.5, ups=1.39, wpb=2982.6, bsz=177.2, num_updates=800, lr=0.0001, gnorm=1.673, train_wall=52, wall=482]2022-06-07 13:23:26 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 005 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:23:28 | INFO | fairseq.tasks.translation | example hypothesis: او را به او را به او را به او را به او را به او را به او را به او را به او بود
+2022-06-07 13:23:28 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 005 | valid on 'valid' subset:  33% 1/3 [00:01<00:03,  1.73s/it]2022-06-07 13:23:30 | INFO | fairseq.tasks.translation | example hypothesis: در این حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال ، در حال
+2022-06-07 13:23:30 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 005 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.91s/it]2022-06-07 13:23:32 | INFO | fairseq.tasks.translation | example hypothesis: اما در این این این این این این این این این این این این ، اما به این این این این این این این این این این این این این این این این این این ، اما به این این این این این این این این این این این آن ، اما به این این این این این این ، اما به این این این این این ، اما به این
+2022-06-07 13:23:32 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 005 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.20s/it]
+                                                                      2022-06-07 13:23:32 | INFO | valid | epoch 005 | valid on 'valid' subset | loss 10.418 | nll_loss 9.574 | ppl 762.44 | bleu 0.5 | wps 1032.7 | wpb 2166.7 | bsz 133.3 | num_updates 885 | best_bleu 0.5
+2022-06-07 13:23:32 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:23:46 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint5.pt (epoch 5 @ 885 updates, score 0.5) (writing took 13.654692836000322 seconds)
+2022-06-07 13:23:46 | INFO | fairseq_cli.train | end of epoch 5 (average epoch stats below)
+2022-06-07 13:23:46 | INFO | train | epoch 005 | loss 10.566 | nll_loss 9.782 | ppl 880.49 | wps 4677.8 | ups 1.59 | wpb 2940.7 | bsz 169.5 | num_updates 885 | lr 0.000110625 | gnorm 1.569 | train_wall 91 | wall 545
+epoch 006:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:23:46 | INFO | fairseq.trainer | begin training epoch 6
+epoch 006:  99% 176/177 [01:30<00:00,  2.03it/s, loss=10.302, nll_loss=9.484, ppl=716.28, wps=5540.4, ups=1.93, wpb=2869.8, bsz=165.4, num_updates=1000, lr=0.000125, gnorm=1.406, train_wall=52, wall=605]2022-06-07 13:25:17 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 006 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:25:19 | INFO | fairseq.tasks.translation | example hypothesis: و من به من به من به من به من به من به من به من به من به من به من به من به من
+2022-06-07 13:25:19 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 006 | valid on 'valid' subset:  33% 1/3 [00:02<00:04,  2.00s/it]2022-06-07 13:25:22 | INFO | fairseq.tasks.translation | example hypothesis: و و در این این این این این این یک یک این یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک این
+2022-06-07 13:25:22 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 006 | valid on 'valid' subset:  67% 2/3 [00:04<00:02,  2.11s/it]2022-06-07 13:25:24 | INFO | fairseq.tasks.translation | example hypothesis: اما در این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این این یک یک یک یک یک یک یک یک یک یک یک این این این این این این این این این این این این این این این این این این این این این این این
+2022-06-07 13:25:24 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 006 | valid on 'valid' subset: 100% 3/3 [00:07<00:00,  2.47s/it]
+                                                                      2022-06-07 13:25:24 | INFO | valid | epoch 006 | valid on 'valid' subset | loss 10.373 | nll_loss 9.531 | ppl 740.01 | bleu 0.14 | wps 933 | wpb 2166.7 | bsz 133.3 | num_updates 1062 | best_bleu 0.5
+2022-06-07 13:25:24 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:25:34 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint6.pt (epoch 6 @ 1062 updates, score 0.14) (writing took 9.078640142999575 seconds)
+2022-06-07 13:25:34 | INFO | fairseq_cli.train | end of epoch 6 (average epoch stats below)
+2022-06-07 13:25:34 | INFO | train | epoch 006 | loss 10.333 | nll_loss 9.517 | ppl 732.86 | wps 4839.6 | ups 1.65 | wpb 2940.7 | bsz 169.5 | num_updates 1062 | lr 0.00013275 | gnorm 1.579 | train_wall 91 | wall 653
+epoch 007:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:25:34 | INFO | fairseq.trainer | begin training epoch 7
+epoch 007:  99% 176/177 [01:30<00:00,  1.96it/s, loss=10.101, nll_loss=9.252, ppl=609.54, wps=5671.2, ups=1.94, wpb=2928.1, bsz=173.3, num_updates=1200, lr=0.00015, gnorm=1.522, train_wall=51, wall=724]2022-06-07 13:27:05 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 007 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:27:07 | INFO | fairseq.tasks.translation | example hypothesis: و به من به من به من به من به من به من به من به او را به او را به او را به من
+2022-06-07 13:27:07 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 007 | valid on 'valid' subset:  33% 1/3 [00:01<00:03,  1.69s/it]2022-06-07 13:27:09 | INFO | fairseq.tasks.translation | example hypothesis: پس از این دو دو دو دو دو دو دو دو دو دو دو دو دو دو دو دو ، در آن را در آن را در آن را در آن را در آن را در آن را در آن را به
+2022-06-07 13:27:09 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 007 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.88s/it]2022-06-07 13:27:11 | INFO | fairseq.tasks.translation | example hypothesis: اما در این حال ، اما در این حال ، اما در حال ، اما در این حال ، اما در حال ، اما در حال ، اما در آن ، اما در آن ، اما در آن ، اما در آن ، اما در آن ، اما یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک یک روز ،
+2022-06-07 13:27:11 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 007 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.31s/it]
+                                                                      2022-06-07 13:27:11 | INFO | valid | epoch 007 | valid on 'valid' subset | loss 9.994 | nll_loss 9.102 | ppl 549.54 | bleu 0.44 | wps 978.2 | wpb 2166.7 | bsz 133.3 | num_updates 1239 | best_bleu 0.5
+2022-06-07 13:27:11 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:27:20 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint7.pt (epoch 7 @ 1239 updates, score 0.44) (writing took 8.695506705999833 seconds)
+2022-06-07 13:27:20 | INFO | fairseq_cli.train | end of epoch 7 (average epoch stats below)
+2022-06-07 13:27:20 | INFO | train | epoch 007 | loss 10.11 | nll_loss 9.262 | ppl 614.06 | wps 4880.6 | ups 1.66 | wpb 2940.7 | bsz 169.5 | num_updates 1239 | lr 0.000154875 | gnorm 1.432 | train_wall 91 | wall 760
+epoch 008:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:27:20 | INFO | fairseq.trainer | begin training epoch 8
+epoch 008:  99% 176/177 [01:30<00:00,  2.02it/s, loss=9.912, nll_loss=9.034, ppl=524.37, wps=5698.3, ups=1.94, wpb=2933.7, bsz=159.8, num_updates=1400, lr=0.000175, gnorm=1.52, train_wall=51, wall=843]2022-06-07 13:28:52 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 008 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:28:53 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که در حالی که در حالی که در حالی که در حالی.
+2022-06-07 13:28:53 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 008 | valid on 'valid' subset:  33% 1/3 [00:01<00:03,  1.56s/it]2022-06-07 13:28:55 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی که در حالی ،
+2022-06-07 13:28:55 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 008 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.85s/it]2022-06-07 13:28:58 | INFO | fairseq.tasks.translation | example hypothesis: او گفت که اگر این کار را به نظر دارد ، اما در این حال ، اما در این حال ، اما در این حال ، اما در حال ، اما به نظر است ، اما در این حال ، اما در حال ، اما به نظر است ، اما به نظر است.
+2022-06-07 13:28:58 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 008 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.25s/it]
+                                                                      2022-06-07 13:28:58 | INFO | valid | epoch 008 | valid on 'valid' subset | loss 9.839 | nll_loss 8.938 | ppl 490.29 | bleu 0.54 | wps 990.2 | wpb 2166.7 | bsz 133.3 | num_updates 1416 | best_bleu 0.54
+2022-06-07 13:28:58 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:29:11 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint8.pt (epoch 8 @ 1416 updates, score 0.54) (writing took 13.49686182700043 seconds)
+2022-06-07 13:29:11 | INFO | fairseq_cli.train | end of epoch 8 (average epoch stats below)
+2022-06-07 13:29:11 | INFO | train | epoch 008 | loss 9.882 | nll_loss 9.003 | ppl 513.03 | wps 4676.1 | ups 1.59 | wpb 2940.7 | bsz 169.5 | num_updates 1416 | lr 0.000177 | gnorm 1.451 | train_wall 91 | wall 871
+epoch 009:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:29:12 | INFO | fairseq.trainer | begin training epoch 9
+epoch 009:  99% 176/177 [01:30<00:00,  1.91it/s, loss=9.722, nll_loss=8.82, ppl=451.96, wps=4095, ups=1.4, wpb=2920.1, bsz=160.6, num_updates=1500, lr=0.0001875, gnorm=1.382, train_wall=51, wall=914]2022-06-07 13:30:43 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 009 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:30:44 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که در حالی که در حالی که در حالی که او را به او نگاه کرد.
+2022-06-07 13:30:44 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 009 | valid on 'valid' subset:  33% 1/3 [00:01<00:03,  1.54s/it]2022-06-07 13:30:46 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که در حالی که در حالی که در حالی که در حالی که در آن را در آن یک یک اتاق و با آن را که در حالی که در حالی که در آن قرار داد.
+2022-06-07 13:30:46 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 009 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.53s/it]2022-06-07 13:30:48 | INFO | fairseq.tasks.translation | example hypothesis: در این حال ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، و به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ، به عنوان ،
+2022-06-07 13:30:48 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 009 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.69s/it]
+                                                                      2022-06-07 13:30:48 | INFO | valid | epoch 009 | valid on 'valid' subset | loss 9.828 | nll_loss 8.907 | ppl 479.99 | bleu 0.44 | wps 1388.2 | wpb 2166.7 | bsz 133.3 | num_updates 1593 | best_bleu 0.54
+2022-06-07 13:30:48 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:30:57 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint9.pt (epoch 9 @ 1593 updates, score 0.44) (writing took 9.099737073000142 seconds)
+2022-06-07 13:30:57 | INFO | fairseq_cli.train | end of epoch 9 (average epoch stats below)
+2022-06-07 13:30:57 | INFO | train | epoch 009 | loss 9.663 | nll_loss 8.753 | ppl 431.48 | wps 4938.2 | ups 1.68 | wpb 2940.7 | bsz 169.5 | num_updates 1593 | lr 0.000199125 | gnorm 1.415 | train_wall 91 | wall 976
+epoch 010:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:30:57 | INFO | fairseq.trainer | begin training epoch 10
+epoch 010:  99% 176/177 [01:30<00:00,  2.02it/s, loss=9.498, nll_loss=8.563, ppl=378.21, wps=5648.7, ups=1.94, wpb=2907.8, bsz=161.4, num_updates=1700, lr=0.0002125, gnorm=1.332, train_wall=51, wall=1031]2022-06-07 13:32:28 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 010 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:32:29 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که در حالی که او را به او نگاه کرد.
+2022-06-07 13:32:29 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 010 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.31s/it]2022-06-07 13:32:31 | INFO | fairseq.tasks.translation | example hypothesis: او گفت که آن‌ها در آن روز روز روز روز روز روز روز روز روز روز روز با آن‌ها را با آن‌ها در میان آن‌ها در آن که در حال با آن‌ها در حال با آن‌ها در حال ،
+2022-06-07 13:32:31 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 010 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.44s/it]2022-06-07 13:32:33 | INFO | fairseq.tasks.translation | example hypothesis: وی افزود که این است که این است ، اما این است که این است ، اما این است که این است که این است که این است که این است ، اما این است که این است که این است که این است ، اما این است ، اما این است که در این است ، اما این است که در این است که در این است که در مورد
+2022-06-07 13:32:33 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 010 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.98s/it]
+                                                                      2022-06-07 13:32:33 | INFO | valid | epoch 010 | valid on 'valid' subset | loss 9.62 | nll_loss 8.652 | ppl 402.29 | bleu 0.84 | wps 1142.7 | wpb 2166.7 | bsz 133.3 | num_updates 1770 | best_bleu 0.84
+2022-06-07 13:32:33 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:32:47 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint10.pt (epoch 10 @ 1770 updates, score 0.84) (writing took 13.221692265999991 seconds)
+2022-06-07 13:32:47 | INFO | fairseq_cli.train | end of epoch 10 (average epoch stats below)
+2022-06-07 13:32:47 | INFO | train | epoch 010 | loss 9.494 | nll_loss 8.558 | ppl 376.96 | wps 4739.5 | ups 1.61 | wpb 2940.7 | bsz 169.5 | num_updates 1770 | lr 0.00022125 | gnorm 1.455 | train_wall 91 | wall 1086
+epoch 011:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:32:47 | INFO | fairseq.trainer | begin training epoch 11
+epoch 011:  99% 176/177 [01:30<00:00,  2.04it/s, loss=9.305, nll_loss=8.343, ppl=324.77, wps=5520.5, ups=1.93, wpb=2856.2, bsz=169.3, num_updates=1900, lr=0.0002375, gnorm=1.495, train_wall=52, wall=1153]2022-06-07 13:34:18 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 011 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:34:19 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که در حالی که از دست به او نگاه کرد.
+2022-06-07 13:34:19 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 011 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.25s/it]2022-06-07 13:34:21 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، در این حال ، در حالی که در حالی که در آن ، در آن که در آن ، در آن شب در آن شب با یک لحظه ، در آن که در آن ، در آن ،
+2022-06-07 13:34:21 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 011 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.69s/it]2022-06-07 13:34:24 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، با این حال ، با این حال ، با این حال ، با این حال ، با این حال ، با این حال ، این حال ، به این حال ، این حال ، این حال ، با این حال ، در این حال ، با این حال ، با این حال ، با این حال ، با این حال ، با این حال ، با این
+2022-06-07 13:34:24 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 011 | valid on 'valid' subset: 100% 3/3 [00:06<00:00,  2.20s/it]
+                                                                      2022-06-07 13:34:24 | INFO | valid | epoch 011 | valid on 'valid' subset | loss 9.551 | nll_loss 8.591 | ppl 385.65 | bleu 0.68 | wps 984 | wpb 2166.7 | bsz 133.3 | num_updates 1947 | best_bleu 0.84
+2022-06-07 13:34:24 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:34:33 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint11.pt (epoch 11 @ 1947 updates, score 0.68) (writing took 9.142482074999862 seconds)
+2022-06-07 13:34:33 | INFO | fairseq_cli.train | end of epoch 11 (average epoch stats below)
+2022-06-07 13:34:33 | INFO | train | epoch 011 | loss 9.294 | nll_loss 8.33 | ppl 321.84 | wps 4899 | ups 1.67 | wpb 2940.7 | bsz 169.5 | num_updates 1947 | lr 0.000243375 | gnorm 1.419 | train_wall 91 | wall 1192
+epoch 012:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:34:33 | INFO | fairseq.trainer | begin training epoch 12
+epoch 012:  99% 176/177 [01:30<00:00,  1.98it/s, loss=9.135, nll_loss=8.149, ppl=283.84, wps=5753.2, ups=1.92, wpb=2994.7, bsz=174.7, num_updates=2100, lr=0.0002625, gnorm=1.464, train_wall=52, wall=1272]2022-06-07 13:36:04 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 012 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:36:05 | INFO | fairseq.tasks.translation | example hypothesis: به نظر می‌رسید که در حالی که او را به من نگاه کرد.
+2022-06-07 13:36:05 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 012 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.43s/it]2022-06-07 13:36:07 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که آن‌ها را در حالی که در حالی که در حالی که در آن همه همه همه چیز را با هم با هم با هم با هم در میان آن‌ها در میان آن‌ها در میان آن‌ها در حالی که با
+2022-06-07 13:36:07 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 012 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.54s/it]2022-06-07 13:36:09 | INFO | fairseq.tasks.translation | example hypothesis: وی افزود: "این است که این امر ، اما این است که این است که این است که این کار را به دلیل است که این امر ، اما این دلیل است که این امر ، اما این است که او را به عنوان یک دلیل است.
+2022-06-07 13:36:09 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 012 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.87s/it]
+                                                                      2022-06-07 13:36:09 | INFO | valid | epoch 012 | valid on 'valid' subset | loss 9.456 | nll_loss 8.459 | ppl 351.81 | bleu 1.07 | wps 1221.2 | wpb 2166.7 | bsz 133.3 | num_updates 2124 | best_bleu 1.07
+2022-06-07 13:36:09 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:36:23 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint12.pt (epoch 12 @ 2124 updates, score 1.07) (writing took 13.216239150000547 seconds)
+2022-06-07 13:36:23 | INFO | fairseq_cli.train | end of epoch 12 (average epoch stats below)
+2022-06-07 13:36:23 | INFO | train | epoch 012 | loss 9.115 | nll_loss 8.127 | ppl 279.6 | wps 4748.6 | ups 1.61 | wpb 2940.7 | bsz 169.5 | num_updates 2124 | lr 0.0002655 | gnorm 1.436 | train_wall 91 | wall 1302
+epoch 013:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:36:23 | INFO | fairseq.trainer | begin training epoch 13
+epoch 013:  99% 176/177 [01:30<00:00,  1.91it/s, loss=8.961, nll_loss=7.949, ppl=247.15, wps=5645, ups=1.95, wpb=2889.1, bsz=167, num_updates=2300, lr=0.0002875, gnorm=1.51, train_wall=51, wall=1393]  2022-06-07 13:37:54 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 013 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:37:55 | INFO | fairseq.tasks.translation | example hypothesis: به نظر می‌رسید ،
+2022-06-07 13:37:55 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 013 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.22s/it]2022-06-07 13:37:56 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که در حالی که در حالی که در حالی که با آن‌ها را با آن‌ها با آن‌ها در میان آن‌ها با آن‌ها در میان آن‌ها ، در حالی که در حالی که در حالی که با آن‌ها را با آن‌ها
+2022-06-07 13:37:56 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 013 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.36s/it]2022-06-07 13:37:58 | INFO | fairseq.tasks.translation | example hypothesis: اما به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان
+2022-06-07 13:37:58 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 013 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.71s/it]
+                                                                      2022-06-07 13:37:59 | INFO | valid | epoch 013 | valid on 'valid' subset | loss 9.366 | nll_loss 8.374 | ppl 331.87 | bleu 0.63 | wps 1321.8 | wpb 2166.7 | bsz 133.3 | num_updates 2301 | best_bleu 1.07
+2022-06-07 13:37:59 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:38:08 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint13.pt (epoch 13 @ 2301 updates, score 0.63) (writing took 9.278326076000667 seconds)
+2022-06-07 13:38:08 | INFO | fairseq_cli.train | end of epoch 13 (average epoch stats below)
+2022-06-07 13:38:08 | INFO | train | epoch 013 | loss 8.91 | nll_loss 7.893 | ppl 237.66 | wps 4946.5 | ups 1.68 | wpb 2940.7 | bsz 169.5 | num_updates 2301 | lr 0.000287625 | gnorm 1.434 | train_wall 91 | wall 1407
+epoch 014:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:38:08 | INFO | fairseq.trainer | begin training epoch 14
+epoch 014:  99% 176/177 [01:30<00:00,  2.00it/s, loss=8.75, nll_loss=7.712, ppl=209.67, wps=4285.9, ups=1.52, wpb=2819.1, bsz=159, num_updates=2400, lr=0.0003, gnorm=1.475, train_wall=51, wall=1458]2022-06-07 13:39:39 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 014 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:39:40 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که او به من نگاه می‌کرد.
+2022-06-07 13:39:40 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 014 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.19s/it]2022-06-07 13:39:42 | INFO | fairseq.tasks.translation | example hypothesis: و با این حال ، همه چیز را با هم در آن صحبت می‌کرد.
+2022-06-07 13:39:42 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 014 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.44s/it]2022-06-07 13:39:44 | INFO | fairseq.tasks.translation | example hypothesis: اما با این حال ، این حال ، به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید ، اما این مساله را به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید ، اما به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید ، اما این نظر می‌رسید.
+2022-06-07 13:39:44 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 014 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.86s/it]
+                                                                      2022-06-07 13:39:44 | INFO | valid | epoch 014 | valid on 'valid' subset | loss 9.306 | nll_loss 8.288 | ppl 312.52 | bleu 0.82 | wps 1193.2 | wpb 2166.7 | bsz 133.3 | num_updates 2478 | best_bleu 1.07
+2022-06-07 13:39:44 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:39:53 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint14.pt (epoch 14 @ 2478 updates, score 0.82) (writing took 8.696034868000424 seconds)
+2022-06-07 13:39:53 | INFO | fairseq_cli.train | end of epoch 14 (average epoch stats below)
+2022-06-07 13:39:53 | INFO | train | epoch 014 | loss 8.748 | nll_loss 7.707 | ppl 208.92 | wps 4967.3 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 2478 | lr 0.00030975 | gnorm 1.457 | train_wall 90 | wall 1512
+epoch 015:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:39:53 | INFO | fairseq.trainer | begin training epoch 15
+epoch 015:  99% 176/177 [01:30<00:00,  1.92it/s, loss=8.547, nll_loss=7.476, ppl=178.07, wps=5779, ups=1.93, wpb=2990.8, bsz=164.2, num_updates=2600, lr=0.000325, gnorm=1.4, train_wall=52, wall=1575]2022-06-07 13:41:24 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 015 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:41:25 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که از روی صندلی بلند شده بود ، و به من نگاه می‌کرد.
+2022-06-07 13:41:25 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 015 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.29s/it]2022-06-07 13:41:27 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، آن‌ها در یک روز گذشته ، که در آن هنگام با آن‌ها در یک روز گذشته ، در یک روز گذشته ، در این کار ، در این کار را با هم در آن صحبت می‌کرد.
+2022-06-07 13:41:27 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 015 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.59s/it]2022-06-07 13:41:29 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، به این حال ، به این حال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، در حال حاضر ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به عنوان مثال ، به طور کلی ، به این موضوع ، به طور کلی ، به این موضوع ، به این موضوع
+2022-06-07 13:41:29 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 015 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.93s/it]
+                                                                      2022-06-07 13:41:29 | INFO | valid | epoch 015 | valid on 'valid' subset | loss 9.196 | nll_loss 8.171 | ppl 288.28 | bleu 1.01 | wps 1144 | wpb 2166.7 | bsz 133.3 | num_updates 2655 | best_bleu 1.07
+2022-06-07 13:41:29 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:41:38 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint15.pt (epoch 15 @ 2655 updates, score 1.01) (writing took 9.10636566500034 seconds)
+2022-06-07 13:41:38 | INFO | fairseq_cli.train | end of epoch 15 (average epoch stats below)
+2022-06-07 13:41:38 | INFO | train | epoch 015 | loss 8.58 | nll_loss 7.514 | ppl 182.77 | wps 4934 | ups 1.68 | wpb 2940.7 | bsz 169.5 | num_updates 2655 | lr 0.000331875 | gnorm 1.503 | train_wall 90 | wall 1618
+epoch 016:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:41:38 | INFO | fairseq.trainer | begin training epoch 16
+epoch 016:  99% 176/177 [01:30<00:00,  1.97it/s, loss=8.417, nll_loss=7.325, ppl=160.29, wps=5652.3, ups=1.96, wpb=2884.6, bsz=159.1, num_updates=2800, lr=0.00035, gnorm=1.596, train_wall=51, wall=1692]2022-06-07 13:43:09 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 016 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:43:10 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که به من خیره شده بود و به من خیره شد.
+2022-06-07 13:43:10 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 016 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.25s/it]2022-06-07 13:43:12 | INFO | fairseq.tasks.translation | example hypothesis: در این هنگام ، که در آن هنگام با آن‌ها صحبت می‌کرد ، گفت:
+2022-06-07 13:43:12 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 016 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.49s/it]2022-06-07 13:43:14 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، این وجود ، که به این ترتیب ، به این ترتیب ، به نظر می‌رسید ، اما به این دلیل که به نظر می‌رسید که به نظر می‌رسید که قانون قانون قانون قانون اساسی اساسی را به این موضوع نشان می‌دهد ، بلکه به نظر می‌رسد که این موضوع را به نظر می‌رسد ، بلکه به نظر می‌رسید که به نظر می‌رسید که به این موضوع ،
+2022-06-07 13:43:14 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 016 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.93s/it]
+                                                                      2022-06-07 13:43:14 | INFO | valid | epoch 016 | valid on 'valid' subset | loss 9.239 | nll_loss 8.2 | ppl 293.98 | bleu 1.22 | wps 1150.5 | wpb 2166.7 | bsz 133.3 | num_updates 2832 | best_bleu 1.22
+2022-06-07 13:43:14 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:43:27 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint16.pt (epoch 16 @ 2832 updates, score 1.22) (writing took 13.073179480000363 seconds)
+2022-06-07 13:43:27 | INFO | fairseq_cli.train | end of epoch 16 (average epoch stats below)
+2022-06-07 13:43:27 | INFO | train | epoch 016 | loss 8.394 | nll_loss 7.3 | ppl 157.63 | wps 4760.2 | ups 1.62 | wpb 2940.7 | bsz 169.5 | num_updates 2832 | lr 0.000354 | gnorm 1.54 | train_wall 90 | wall 1727
+epoch 017:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:43:27 | INFO | fairseq.trainer | begin training epoch 17
+epoch 017:  99% 176/177 [01:30<00:00,  1.98it/s, loss=8.239, nll_loss=7.12, ppl=139.07, wps=5767.5, ups=1.93, wpb=2985.1, bsz=167, num_updates=3000, lr=0.000375, gnorm=1.463, train_wall=52, wall=1813]2022-06-07 13:44:58 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 017 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:45:00 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که روی میز نشسته بود.
+2022-06-07 13:45:00 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 017 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.28s/it]2022-06-07 13:45:01 | INFO | fairseq.tasks.translation | example hypothesis: و در آن هنگام که در آن هنگام هنگام هنگام با یک زن صحبت می‌کرد ، با یکدیگر صحبت می‌کرد.
+2022-06-07 13:45:01 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 017 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.41s/it]2022-06-07 13:45:03 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، این حال ، به نظر می‌رسید که قانون اساسی اساسی اساسی اساسی اساسی را به دست داده بود.
+2022-06-07 13:45:03 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 017 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.63s/it]
+                                                                      2022-06-07 13:45:03 | INFO | valid | epoch 017 | valid on 'valid' subset | loss 9.179 | nll_loss 8.138 | ppl 281.69 | bleu 1.41 | wps 1397.8 | wpb 2166.7 | bsz 133.3 | num_updates 3009 | best_bleu 1.41
+2022-06-07 13:45:03 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:45:17 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint17.pt (epoch 17 @ 3009 updates, score 1.41) (writing took 13.52397211799962 seconds)
+2022-06-07 13:45:17 | INFO | fairseq_cli.train | end of epoch 17 (average epoch stats below)
+2022-06-07 13:45:17 | INFO | train | epoch 017 | loss 8.203 | nll_loss 7.081 | ppl 135.36 | wps 4765.8 | ups 1.62 | wpb 2940.7 | bsz 169.5 | num_updates 3009 | lr 0.000376125 | gnorm 1.535 | train_wall 91 | wall 1836
+epoch 018:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:45:17 | INFO | fairseq.trainer | begin training epoch 18
+epoch 018:  99% 176/177 [01:30<00:00,  1.89it/s, loss=8.019, nll_loss=6.872, ppl=117.11, wps=4105.5, ups=1.44, wpb=2859.5, bsz=170.6, num_updates=3100, lr=0.0003875, gnorm=1.695, train_wall=51, wall=1883]2022-06-07 13:46:48 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 018 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:46:49 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که موهایش به من نزدیک شده بود ، در حالی که به نظر می‌رسید.
+2022-06-07 13:46:49 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 018 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.42s/it]2022-06-07 13:46:51 | INFO | fairseq.tasks.translation | example hypothesis: و در این هنگام که در آن هنگام که با شتاب از روی میز میز نشسته بودند و به همراه می‌رسید و به همراه می‌رسید و در آن طرف دیگر در مورد بحث قرار گرفت.
+2022-06-07 13:46:51 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 018 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.65s/it]2022-06-07 13:46:53 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، اما اگر هر یک از اعضای اعضای اعضای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای شورای متحد متحد متحد متحد متحد متحد متحد ، بلکه به طور کلی ، بلکه به خاطر آورد ، بلکه به طور کلی ، بلکه به طور کلی ، بلکه به طور کلی ، بلکه به طور کلی ، بلکه به طور کلی ،
+2022-06-07 13:46:53 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 018 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  2.01s/it]
+                                                                      2022-06-07 13:46:53 | INFO | valid | epoch 018 | valid on 'valid' subset | loss 9.217 | nll_loss 8.156 | ppl 285.2 | bleu 0.82 | wps 1116.3 | wpb 2166.7 | bsz 133.3 | num_updates 3186 | best_bleu 1.41
+2022-06-07 13:46:53 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:47:02 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint18.pt (epoch 18 @ 3186 updates, score 0.82) (writing took 8.995991185000094 seconds)
+2022-06-07 13:47:02 | INFO | fairseq_cli.train | end of epoch 18 (average epoch stats below)
+2022-06-07 13:47:02 | INFO | train | epoch 018 | loss 8.044 | nll_loss 6.897 | ppl 119.16 | wps 4931.1 | ups 1.68 | wpb 2940.7 | bsz 169.5 | num_updates 3186 | lr 0.00039825 | gnorm 1.644 | train_wall 90 | wall 1942
+epoch 019:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:47:02 | INFO | fairseq.trainer | begin training epoch 19
+epoch 019:  99% 176/177 [01:30<00:00,  1.95it/s, loss=7.795, nll_loss=6.612, ppl=97.79, wps=5714.1, ups=1.94, wpb=2948.3, bsz=173, num_updates=3300, lr=0.0004125, gnorm=1.617, train_wall=51, wall=2000]2022-06-07 13:48:33 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 019 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:48:34 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که من به من نگاه کردم ، در حالی که به من خیره شد.
+2022-06-07 13:48:34 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 019 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.37s/it]2022-06-07 13:48:36 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که با آن‌ها صحبت می‌کردند و با شتاب به صحبت می‌کردند.
+2022-06-07 13:48:36 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 019 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.47s/it]2022-06-07 13:48:38 | INFO | fairseq.tasks.translation | example hypothesis: با این وجود ، این وجود ، به نظر می‌رسید که هر یک از آن را به خاطر می‌آورد ، و به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید که این موضوع را به طور کلی از لحاظ و به طور کلی از آن ، بلکه به نظر می‌رسید.
+2022-06-07 13:48:38 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 019 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.70s/it]
+                                                                      2022-06-07 13:48:38 | INFO | valid | epoch 019 | valid on 'valid' subset | loss 9.244 | nll_loss 8.144 | ppl 282.91 | bleu 1.55 | wps 1346.1 | wpb 2166.7 | bsz 133.3 | num_updates 3363 | best_bleu 1.55
+2022-06-07 13:48:38 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:48:51 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint19.pt (epoch 19 @ 3363 updates, score 1.55) (writing took 13.10166384600052 seconds)
+2022-06-07 13:48:51 | INFO | fairseq_cli.train | end of epoch 19 (average epoch stats below)
+2022-06-07 13:48:51 | INFO | train | epoch 019 | loss 7.843 | nll_loss 6.665 | ppl 101.51 | wps 4783.7 | ups 1.63 | wpb 2940.7 | bsz 169.5 | num_updates 3363 | lr 0.000420375 | gnorm 1.652 | train_wall 90 | wall 2051
+epoch 020:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:48:51 | INFO | fairseq.trainer | begin training epoch 20
+epoch 020:  99% 176/177 [01:30<00:00,  2.02it/s, loss=7.653, nll_loss=6.444, ppl=87.06, wps=5744.3, ups=1.94, wpb=2963.5, bsz=166.1, num_updates=3500, lr=0.0004375, gnorm=1.587, train_wall=51, wall=2121]2022-06-07 13:50:22 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 020 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:50:23 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که موهایش را بلند می‌کرد ، موهایش را بلند می‌کرد.
+2022-06-07 13:50:23 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 020 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.24s/it]2022-06-07 13:50:25 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که در مورد بحث قرار گرفته بودند و در مورد بحث قرار می‌گرفت ، در حالی که در مورد بحث قرار می‌گرفت.
+2022-06-07 13:50:25 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 020 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.44s/it]2022-06-07 13:50:27 | INFO | fairseq.tasks.translation | example hypothesis: کمیته امور امور امور امور امور امور خارجه ، به این دلیل است که هر گونه گونه گونه گونه قانون قانون و قانون قانون قانون اساسی را به طور کلی مطرح کرده بود ، اما این موضوع را مطرح کرده بود.
+2022-06-07 13:50:27 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 020 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.78s/it]
+                                                                      2022-06-07 13:50:27 | INFO | valid | epoch 020 | valid on 'valid' subset | loss 9.214 | nll_loss 8.153 | ppl 284.73 | bleu 0.96 | wps 1258.5 | wpb 2166.7 | bsz 133.3 | num_updates 3540 | best_bleu 1.55
+2022-06-07 13:50:27 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:50:36 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint20.pt (epoch 20 @ 3540 updates, score 0.96) (writing took 9.056436167000356 seconds)
+2022-06-07 13:50:36 | INFO | fairseq_cli.train | end of epoch 20 (average epoch stats below)
+2022-06-07 13:50:36 | INFO | train | epoch 020 | loss 7.626 | nll_loss 6.414 | ppl 85.29 | wps 4962.5 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 3540 | lr 0.0004425 | gnorm 1.603 | train_wall 90 | wall 2155
+epoch 021:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:50:36 | INFO | fairseq.trainer | begin training epoch 21
+epoch 021:  99% 176/177 [01:30<00:00,  1.88it/s, loss=7.469, nll_loss=6.23, ppl=75.06, wps=5678.2, ups=1.94, wpb=2927.8, bsz=175.3, num_updates=3700, lr=0.0004625, gnorm=1.742, train_wall=51, wall=2237]2022-06-07 13:52:07 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 021 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:52:08 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که موهایش را پنهان می‌کرد ، پاک می‌کرد.
+2022-06-07 13:52:08 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 021 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.39s/it]2022-06-07 13:52:10 | INFO | fairseq.tasks.translation | example hypothesis: و در آن هنگام ، آن‌ها را در یک فروشگاه دیگر در میان آن‌ها جمع می‌کردند ، و در حالی که آن‌ها را در آن می‌اندازد ، در آن لحظه با آن‌ها صحبت می‌کردند.
+2022-06-07 13:52:10 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 021 | valid on 'valid' subset:  67% 2/3 [00:03<00:01,  1.52s/it]2022-06-07 13:52:12 | INFO | fairseq.tasks.translation | example hypothesis: اما این مساله ، یکی از اعضای گروه گروه ، به عنوان یک واقعیت واقعیت واقعیت واقعیت واقعیت واقعیت ، به این واقعیت است که او را به دست داده و آن را به خاطر می‌آورد.
+2022-06-07 13:52:12 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 021 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.78s/it]
+                                                                      2022-06-07 13:52:12 | INFO | valid | epoch 021 | valid on 'valid' subset | loss 9.206 | nll_loss 8.115 | ppl 277.17 | bleu 1.18 | wps 1277.9 | wpb 2166.7 | bsz 133.3 | num_updates 3717 | best_bleu 1.55
+2022-06-07 13:52:12 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:52:21 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint21.pt (epoch 21 @ 3717 updates, score 1.18) (writing took 8.739267734999885 seconds)
+2022-06-07 13:52:21 | INFO | fairseq_cli.train | end of epoch 21 (average epoch stats below)
+2022-06-07 13:52:21 | INFO | train | epoch 021 | loss 7.437 | nll_loss 6.195 | ppl 73.25 | wps 4971.5 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 3717 | lr 0.000464625 | gnorm 1.703 | train_wall 90 | wall 2260
+epoch 022:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:52:21 | INFO | fairseq.trainer | begin training epoch 22
+epoch 022:  99% 176/177 [01:30<00:00,  2.13it/s, loss=7.228, nll_loss=5.953, ppl=61.96, wps=4576.2, ups=1.52, wpb=3003.3, bsz=166.5, num_updates=3800, lr=0.000475, gnorm=1.718, train_wall=51, wall=2303]2022-06-07 13:53:51 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 022 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:53:53 | INFO | fairseq.tasks.translation | example hypothesis: و در حالی که موهایش به من نزدیک شده بود و مرا از من دور می‌کرد.
+2022-06-07 13:53:53 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 022 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.30s/it]2022-06-07 13:53:54 | INFO | fairseq.tasks.translation | example hypothesis: در این هنگام ، آن‌ها را در مورد بحث قرار داده بودند که در آن هنگام هنگام هنگام هنگام هنگام بحث در مورد بحث قرار داده بودند و در مورد بحث قرار داده بودند.
+2022-06-07 13:53:54 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 022 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.49s/it]2022-06-07 13:53:56 | INFO | fairseq.tasks.translation | example hypothesis: به نظر می‌رسید که این واقعیت به نظر می‌رسید که او را به طور کلی از دست داده بود ، اما به نظر می‌رسید که به نظر می‌رسید ، بلکه به نظر می‌رسید که به نظر می‌رسید که به نظر می‌رسید.
+2022-06-07 13:53:56 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 022 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.78s/it]
+                                                                      2022-06-07 13:53:56 | INFO | valid | epoch 022 | valid on 'valid' subset | loss 9.315 | nll_loss 8.228 | ppl 299.92 | bleu 1.35 | wps 1264.3 | wpb 2166.7 | bsz 133.3 | num_updates 3894 | best_bleu 1.55
+2022-06-07 13:53:56 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:54:05 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint22.pt (epoch 22 @ 3894 updates, score 1.35) (writing took 8.863194610001301 seconds)
+2022-06-07 13:54:05 | INFO | fairseq_cli.train | end of epoch 22 (average epoch stats below)
+2022-06-07 13:54:05 | INFO | train | epoch 022 | loss 7.253 | nll_loss 5.979 | ppl 63.08 | wps 4971.5 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 3894 | lr 0.00048675 | gnorm 1.792 | train_wall 90 | wall 2365
+epoch 023:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:54:05 | INFO | fairseq.trainer | begin training epoch 23
+epoch 023:  99% 176/177 [01:30<00:00,  1.99it/s, loss=7.013, nll_loss=5.703, ppl=52.09, wps=5682.1, ups=1.94, wpb=2924.5, bsz=175.5, num_updates=4000, lr=0.0005, gnorm=1.869, train_wall=51, wall=2420]2022-06-07 13:55:36 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 023 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:55:37 | INFO | fairseq.tasks.translation | example hypothesis: ناگهان با خشم پوشیده شده بود.
+2022-06-07 13:55:37 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 023 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.30s/it]2022-06-07 13:55:39 | INFO | fairseq.tasks.translation | example hypothesis: در این هنگام ، آن‌ها را با دقت و هیجان و هیجان و هیجان و هیجان در میان آن‌ها در میان یکدیگر ایستاده بودند.
+2022-06-07 13:55:39 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 023 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.40s/it]2022-06-07 13:55:41 | INFO | fairseq.tasks.translation | example hypothesis: به نظر می‌رسید که اگر چه کسی باشد ، از قوانین سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق سابق جهاد اسلامی ، بلکه بر سر می‌برد.
+2022-06-07 13:55:41 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 023 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.65s/it]
+                                                                      2022-06-07 13:55:41 | INFO | valid | epoch 023 | valid on 'valid' subset | loss 9.335 | nll_loss 8.237 | ppl 301.67 | bleu 1.86 | wps 1383.3 | wpb 2166.7 | bsz 133.3 | num_updates 4071 | best_bleu 1.86
+2022-06-07 13:55:41 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:55:54 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint23.pt (epoch 23 @ 4071 updates, score 1.86) (writing took 13.338626567001484 seconds)
+2022-06-07 13:55:54 | INFO | fairseq_cli.train | end of epoch 23 (average epoch stats below)
+2022-06-07 13:55:54 | INFO | train | epoch 023 | loss 7.061 | nll_loss 5.755 | ppl 54.02 | wps 4778.2 | ups 1.62 | wpb 2940.7 | bsz 169.5 | num_updates 4071 | lr 0.000495621 | gnorm 1.795 | train_wall 90 | wall 2474
+epoch 024:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:55:54 | INFO | fairseq.trainer | begin training epoch 24
+epoch 024:  99% 176/177 [01:30<00:00,  1.99it/s, loss=6.77, nll_loss=5.419, ppl=42.79, wps=5783, ups=1.93, wpb=2991.7, bsz=184.2, num_updates=4200, lr=0.00048795, gnorm=1.791, train_wall=52, wall=2540]2022-06-07 13:57:25 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 024 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:57:26 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که با خشم و خشم خود را از دست داده بود ، به من سرد سرد بود.
+2022-06-07 13:57:26 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 024 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.37s/it]2022-06-07 13:57:28 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که آن‌ها را به هم داده بودند و با شتاب تمام تمام تمام تمام آشنایان خود را در میان می‌گذاشتند.
+2022-06-07 13:57:28 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 024 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.47s/it]2022-06-07 13:57:30 | INFO | fairseq.tasks.translation | example hypothesis: اما بنا بر این باور است که هر کس که او را به طور کلی توصیف کرده بود ، پاسخ داد که هر چیزی که در آن پیوند پیوند پیوند پیوند و یا خیر خیر خیر است.
+2022-06-07 13:57:30 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 024 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.68s/it]
+                                                                      2022-06-07 13:57:30 | INFO | valid | epoch 024 | valid on 'valid' subset | loss 9.391 | nll_loss 8.278 | ppl 310.35 | bleu 1.99 | wps 1366.8 | wpb 2166.7 | bsz 133.3 | num_updates 4248 | best_bleu 1.99
+2022-06-07 13:57:30 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:57:43 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint24.pt (epoch 24 @ 4248 updates, score 1.99) (writing took 13.23995731100149 seconds)
+2022-06-07 13:57:43 | INFO | fairseq_cli.train | end of epoch 24 (average epoch stats below)
+2022-06-07 13:57:43 | INFO | train | epoch 024 | loss 6.815 | nll_loss 5.47 | ppl 44.33 | wps 4779.8 | ups 1.63 | wpb 2940.7 | bsz 169.5 | num_updates 4248 | lr 0.000485185 | gnorm 1.802 | train_wall 90 | wall 2583
+epoch 025:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:57:43 | INFO | fairseq.trainer | begin training epoch 25
+epoch 025:  99% 176/177 [01:30<00:00,  2.02it/s, loss=6.632, nll_loss=5.254, ppl=38.17, wps=5789.3, ups=1.95, wpb=2975.6, bsz=184.5, num_updates=4400, lr=0.000476731, gnorm=1.888, train_wall=51, wall=2661]2022-06-07 13:59:14 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 025 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 13:59:15 | INFO | fairseq.tasks.translation | example hypothesis: من تمام عمر خود را پنهان می‌کردم.
+2022-06-07 13:59:15 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 025 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.18s/it]2022-06-07 13:59:16 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام که توسط پلیس در داخل مزرعه مزرعه مزرعه ایستاده بودند ، و در عرض عرض و یا خیر را به دست داده بود.
+2022-06-07 13:59:16 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 025 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.29s/it]2022-06-07 13:59:18 | INFO | fairseq.tasks.translation | example hypothesis: با این وجود ، هر یک از قوانین تجاری تجاری تجاری تجاری ، فرد فرد و گروه را به خاطر آورد ، اما بنا بر پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه ، قوانین ، قوانین ، قوانین ، قوانین ، قوانین ، و قوانین ، قوانین و گروه ،
+2022-06-07 13:59:18 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 025 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.56s/it]
+                                                                      2022-06-07 13:59:18 | INFO | valid | epoch 025 | valid on 'valid' subset | loss 9.494 | nll_loss 8.386 | ppl 334.49 | bleu 1.62 | wps 1459.6 | wpb 2166.7 | bsz 133.3 | num_updates 4425 | best_bleu 1.99
+2022-06-07 13:59:18 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 13:59:27 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint25.pt (epoch 25 @ 4425 updates, score 1.62) (writing took 8.861133968001013 seconds)
+2022-06-07 13:59:27 | INFO | fairseq_cli.train | end of epoch 25 (average epoch stats below)
+2022-06-07 13:59:27 | INFO | train | epoch 025 | loss 6.604 | nll_loss 5.224 | ppl 37.39 | wps 5007 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 4425 | lr 0.000475383 | gnorm 1.879 | train_wall 90 | wall 2687
+epoch 026:   0% 0/177 [00:00<?, ?it/s]2022-06-07 13:59:27 | INFO | fairseq.trainer | begin training epoch 26
+epoch 026:  99% 176/177 [01:30<00:00,  2.06it/s, loss=6.428, nll_loss=5.012, ppl=32.28, wps=5776.7, ups=1.97, wpb=2935.8, bsz=177.8, num_updates=4600, lr=0.000466252, gnorm=1.86, train_wall=51, wall=2776]2022-06-07 14:00:58 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 026 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:00:59 | INFO | fairseq.tasks.translation | example hypothesis: در حالی که پوشیده از بدن پوشیده بود ، پوشیده بود.
+2022-06-07 14:00:59 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 026 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.26s/it]2022-06-07 14:01:01 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام که توسط ماموران پلیس در داخل داخل داخل شهر بودند ، در حالی که در آن هنگام هنگام با شتاب از طریق وسایلی که در داخل داخل داخل داخل داخل داخل داخل شهر بودند و در داخل داخل داخل
+2022-06-07 14:01:01 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 026 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.49s/it]2022-06-07 14:01:03 | INFO | fairseq.tasks.translation | example hypothesis: حتی اگر این عمل را به خاطر آورد که با آن نفرت از قوانین اخلاقی اخلاقی اخلاقی اخلاقی ، آگاه می‌کرد که موجب آن گردید.
+2022-06-07 14:01:03 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 026 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.75s/it]
+                                                                      2022-06-07 14:01:03 | INFO | valid | epoch 026 | valid on 'valid' subset | loss 9.555 | nll_loss 8.432 | ppl 345.37 | bleu 1.75 | wps 1273.7 | wpb 2166.7 | bsz 133.3 | num_updates 4602 | best_bleu 1.99
+2022-06-07 14:01:03 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:01:12 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint26.pt (epoch 26 @ 4602 updates, score 1.75) (writing took 8.669227634998606 seconds)
+2022-06-07 14:01:12 | INFO | fairseq_cli.train | end of epoch 26 (average epoch stats below)
+2022-06-07 14:01:12 | INFO | train | epoch 026 | loss 6.359 | nll_loss 4.94 | ppl 30.69 | wps 4982.1 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 4602 | lr 0.000466151 | gnorm 1.846 | train_wall 90 | wall 2791
+epoch 027:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:01:12 | INFO | fairseq.trainer | begin training epoch 27
+epoch 027:  99% 176/177 [01:30<00:00,  2.12it/s, loss=6.057, nll_loss=4.592, ppl=24.11, wps=4554.1, ups=1.51, wpb=3006.8, bsz=171.2, num_updates=4700, lr=0.000461266, gnorm=1.823, train_wall=52, wall=2842]2022-06-07 14:02:42 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 027 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:02:44 | INFO | fairseq.tasks.translation | example hypothesis: در من سرد و سرد خود را پنهان می‌کرد.
+2022-06-07 14:02:44 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 027 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.30s/it]2022-06-07 14:02:45 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام که با آن غذا غذا غذا را در اختیار داشت و با شتاب تمام تمام تمام محصولات غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی غذایی می‌داد
+2022-06-07 14:02:45 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 027 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.53s/it]2022-06-07 14:02:48 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، به نظر می‌رسید که هر یک از قوانین تاریخی ، گرچه گرچه با واقعیت واقعیت واقعیت واقعیت را از دست می‌داد ، به خاطر آورد که این واقعیت که هر یک از قوانین مربوط به تفسیر یک از قوانین سیاسی مصر را به خود آگاه می‌کند.
+2022-06-07 14:02:48 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 027 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.83s/it]
+                                                                      2022-06-07 14:02:48 | INFO | valid | epoch 027 | valid on 'valid' subset | loss 9.639 | nll_loss 8.519 | ppl 366.74 | bleu 1.57 | wps 1218.4 | wpb 2166.7 | bsz 133.3 | num_updates 4779 | best_bleu 1.99
+2022-06-07 14:02:48 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:02:57 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint27.pt (epoch 27 @ 4779 updates, score 1.57) (writing took 8.989118213999973 seconds)
+2022-06-07 14:02:57 | INFO | fairseq_cli.train | end of epoch 27 (average epoch stats below)
+2022-06-07 14:02:57 | INFO | train | epoch 027 | loss 6.118 | nll_loss 4.658 | ppl 25.24 | wps 4953 | ups 1.68 | wpb 2940.7 | bsz 169.5 | num_updates 4779 | lr 0.000457437 | gnorm 1.858 | train_wall 90 | wall 2896
+epoch 028:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:02:57 | INFO | fairseq.trainer | begin training epoch 28
+epoch 028:  99% 176/177 [01:30<00:00,  1.92it/s, loss=5.876, nll_loss=4.375, ppl=20.75, wps=5621.2, ups=1.94, wpb=2895.2, bsz=163.2, num_updates=4900, lr=0.000451754, gnorm=1.893, train_wall=51, wall=2959]2022-06-07 14:04:27 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 028 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:04:29 | INFO | fairseq.tasks.translation | example hypothesis: عشق من مرا در آغوش می‌گرفت و با خونسردی رفتار می‌کرد.
+2022-06-07 14:04:29 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 028 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.30s/it]2022-06-07 14:04:30 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی ساعتی همه را به همراه داده بود و با اصرار به پلیس داده بود که در عرض عرض عرض عرض جواب داده بود.
+2022-06-07 14:04:30 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 028 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.41s/it]2022-06-07 14:04:32 | INFO | fairseq.tasks.translation | example hypothesis: با این وجود ، او تایید کرد که هر آنچه را که هست هست احساس می‌کند ، بلکه به طور کامل از طریق پست پست و بررسی می‌کند.
+2022-06-07 14:04:32 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 028 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.66s/it]
+                                                                      2022-06-07 14:04:32 | INFO | valid | epoch 028 | valid on 'valid' subset | loss 9.612 | nll_loss 8.459 | ppl 352.01 | bleu 1.74 | wps 1379.5 | wpb 2166.7 | bsz 133.3 | num_updates 4956 | best_bleu 1.99
+2022-06-07 14:04:32 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:04:41 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint28.pt (epoch 28 @ 4956 updates, score 1.74) (writing took 8.620481412999652 seconds)
+2022-06-07 14:04:41 | INFO | fairseq_cli.train | end of epoch 28 (average epoch stats below)
+2022-06-07 14:04:41 | INFO | train | epoch 028 | loss 5.92 | nll_loss 4.425 | ppl 21.48 | wps 5003.7 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 4956 | lr 0.000449194 | gnorm 1.896 | train_wall 90 | wall 3000
+epoch 029:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:04:41 | INFO | fairseq.trainer | begin training epoch 29
+epoch 029:  99% 176/177 [01:30<00:00,  1.97it/s, loss=5.77, nll_loss=4.247, ppl=18.99, wps=5963.1, ups=1.92, wpb=3107.4, bsz=175.9, num_updates=5100, lr=0.000442807, gnorm=1.845, train_wall=52, wall=3074]2022-06-07 14:06:11 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 029 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:06:13 | INFO | fairseq.tasks.translation | example hypothesis: بدون‌اینکه پای من را در آغوش می‌گرفت ، بدن من کام لا سرد بود.
+2022-06-07 14:06:13 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 029 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.25s/it]2022-06-07 14:06:14 | INFO | fairseq.tasks.translation | example hypothesis: و در حوالی آن شب با عجله که به آن‌ها داده بود و با شتاب تمام تمام تمام تمام تمام جامعه جامعه را در دست داده بود.
+2022-06-07 14:06:14 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 029 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.39s/it]2022-06-07 14:06:16 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، هر کسی که هست که حتی یک ماده ماده ماده ماده ماده ماده ماده ماده ماده ماده را ذکر می‌کرد ، هر کس که در عین حال حاضر یک ماده ماده ماده ماده ماده ماده ماده را القا می‌کرد و با یک واقعیت که ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا.
+2022-06-07 14:06:16 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 029 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.74s/it]
+                                                                      2022-06-07 14:06:16 | INFO | valid | epoch 029 | valid on 'valid' subset | loss 9.732 | nll_loss 8.641 | ppl 399.34 | bleu 1.88 | wps 1303.2 | wpb 2166.7 | bsz 133.3 | num_updates 5133 | best_bleu 1.99
+2022-06-07 14:06:16 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:06:25 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint29.pt (epoch 29 @ 5133 updates, score 1.88) (writing took 8.796544369999538 seconds)
+2022-06-07 14:06:25 | INFO | fairseq_cli.train | end of epoch 29 (average epoch stats below)
+2022-06-07 14:06:25 | INFO | train | epoch 029 | loss 5.704 | nll_loss 4.172 | ppl 18.03 | wps 4981.2 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 5133 | lr 0.000441382 | gnorm 1.907 | train_wall 90 | wall 3105
+epoch 030:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:06:25 | INFO | fairseq.trainer | begin training epoch 30
+epoch 030:  99% 176/177 [01:30<00:00,  1.98it/s, loss=5.549, nll_loss=3.985, ppl=15.84, wps=5740.2, ups=1.99, wpb=2888, bsz=165.8, num_updates=5300, lr=0.000434372, gnorm=1.974, train_wall=50, wall=3190]2022-06-07 14:07:56 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 030 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:07:57 | INFO | fairseq.tasks.translation | example hypothesis: شتر من که تمام عمر من بود ، پوشیده شده بود.
+2022-06-07 14:07:57 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 030 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.29s/it]2022-06-07 14:07:59 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی همه محصولات محصولات خرد می‌کردند و هرگاه هرگاه هرگاه اسب‌های اسب‌های اسب‌های اسب‌های اسب‌های وحشی را که در یک مزرعه مزرعه مزرعه مزرعه بودند با هم مخلوط می‌کردند.
+2022-06-07 14:07:59 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 030 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.44s/it]2022-06-07 14:08:01 | INFO | fairseq.tasks.translation | example hypothesis: هر چند که به طور کلی ذکر شده باشد ، اما هیچ ارتباطی با یک از مقررات مقررات مقررات بین‌المللی که وابسته به ذکر شده باشد ، هر نوع شناخته‌شده را تایید می‌کند.
+2022-06-07 14:08:01 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 030 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.69s/it]
+                                                                      2022-06-07 14:08:01 | INFO | valid | epoch 030 | valid on 'valid' subset | loss 9.839 | nll_loss 8.714 | ppl 419.95 | bleu 1.87 | wps 1337.9 | wpb 2166.7 | bsz 133.3 | num_updates 5310 | best_bleu 1.99
+2022-06-07 14:08:01 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:08:10 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint30.pt (epoch 30 @ 5310 updates, score 1.87) (writing took 8.8638969299991 seconds)
+2022-06-07 14:08:10 | INFO | fairseq_cli.train | end of epoch 30 (average epoch stats below)
+2022-06-07 14:08:10 | INFO | train | epoch 030 | loss 5.489 | nll_loss 3.921 | ppl 15.14 | wps 4986.5 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 5310 | lr 0.000433963 | gnorm 1.924 | train_wall 90 | wall 3209
+epoch 031:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:08:10 | INFO | fairseq.trainer | begin training epoch 31
+epoch 031:  99% 176/177 [01:30<00:00,  1.96it/s, loss=5.245, nll_loss=3.64, ppl=12.46, wps=4524.5, ups=1.52, wpb=2977.8, bsz=173.3, num_updates=5400, lr=0.000430331, gnorm=1.836, train_wall=52, wall=3256]2022-06-07 14:09:41 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 031 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:09:42 | INFO | fairseq.tasks.translation | example hypothesis: شب سرد و نافذ برایم برایم برایم برایم برایم برایم سرد بود.
+2022-06-07 14:09:42 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 031 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.21s/it]2022-06-07 14:09:43 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی همه اضطراب و بیداری در جلوی میز شام شام شام شام شام را می‌گرفت و آن را هم در حالی که وال ژان به گوش می‌دادند و در یک ردیف ردیف قرار داده بودند.
+2022-06-07 14:09:43 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 031 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.41s/it]2022-06-07 14:09:45 | INFO | fairseq.tasks.translation | example hypothesis: با این همه ، هر چند که ب ب - - ا ا - - - فرض می‌کرد که هیچ یک از قوانین روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی تنش تنش تنش تنش می‌کرد.
+2022-06-07 14:09:45 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 031 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.69s/it]
+                                                                      2022-06-07 14:09:45 | INFO | valid | epoch 031 | valid on 'valid' subset | loss 9.909 | nll_loss 8.757 | ppl 432.49 | bleu 1.85 | wps 1325.3 | wpb 2166.7 | bsz 133.3 | num_updates 5487 | best_bleu 1.99
+2022-06-07 14:09:45 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:09:54 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint31.pt (epoch 31 @ 5487 updates, score 1.85) (writing took 8.782656548000887 seconds)
+2022-06-07 14:09:54 | INFO | fairseq_cli.train | end of epoch 31 (average epoch stats below)
+2022-06-07 14:09:54 | INFO | train | epoch 031 | loss 5.299 | nll_loss 3.696 | ppl 12.96 | wps 4980 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 5487 | lr 0.000426906 | gnorm 1.893 | train_wall 90 | wall 3314
+epoch 032:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:09:54 | INFO | fairseq.trainer | begin training epoch 32
+epoch 032:  99% 176/177 [01:30<00:00,  1.92it/s, loss=5.061, nll_loss=3.417, ppl=10.68, wps=5626, ups=1.95, wpb=2890.3, bsz=162, num_updates=5600, lr=0.000422577, gnorm=1.895, train_wall=51, wall=3372]2022-06-07 14:11:25 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 032 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:11:26 | INFO | fairseq.tasks.translation | example hypothesis: ناگهان در حالی که من کام لا ساکت و سرد بود ، بدن مرا خنثی می‌کرد.
+2022-06-07 14:11:26 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 032 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.31s/it]2022-06-07 14:11:28 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام همه حیوانات هولناک هولناک هولناک در خواب بودند و در برابر مسافران مسافران از دشمن جدا می‌شدند.
+2022-06-07 14:11:28 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 032 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.45s/it]2022-06-07 14:11:30 | INFO | fairseq.tasks.translation | example hypothesis: اما ، در عین حال ، از یک تصمیم مبتنی بر آن مبنی بر آن مبنی بر‌اینکه هر اقدامی مبنی بر‌اینکه بر‌اینکه بر‌اینکه بر‌اینکه وی هیچ اقدامی مبنی بر‌اینکه هر یک از آن را که هست هست ، مورد سرزنش قرار داده بود.
+2022-06-07 14:11:30 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 032 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.71s/it]
+                                                                      2022-06-07 14:11:30 | INFO | valid | epoch 032 | valid on 'valid' subset | loss 10.009 | nll_loss 8.852 | ppl 462.06 | bleu 1.96 | wps 1324.6 | wpb 2166.7 | bsz 133.3 | num_updates 5664 | best_bleu 1.99
+2022-06-07 14:11:30 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:11:39 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint32.pt (epoch 32 @ 5664 updates, score 1.96) (writing took 8.762176788999568 seconds)
+2022-06-07 14:11:39 | INFO | fairseq_cli.train | end of epoch 32 (average epoch stats below)
+2022-06-07 14:11:39 | INFO | train | epoch 032 | loss 5.134 | nll_loss 3.5 | ppl 11.32 | wps 4982.7 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 5664 | lr 0.000420183 | gnorm 1.922 | train_wall 90 | wall 3418
+epoch 033:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:11:39 | INFO | fairseq.trainer | begin training epoch 33
+epoch 033:  99% 176/177 [01:30<00:00,  1.92it/s, loss=4.964, nll_loss=3.301, ppl=9.85, wps=5711.1, ups=1.93, wpb=2953.9, bsz=176.4, num_updates=5800, lr=0.000415227, gnorm=2.082, train_wall=52, wall=3488]2022-06-07 14:13:09 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 033 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:13:11 | INFO | fairseq.tasks.translation | example hypothesis: کیتی‌لبخندی استهزاآمیز زد.
+2022-06-07 14:13:11 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 033 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.28s/it]2022-06-07 14:13:12 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی همه را به قدری محکم می‌کردند و با دقت به اطراف آن اعتراف می‌کردند.
+2022-06-07 14:13:12 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 033 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.38s/it]2022-06-07 14:13:14 | INFO | fairseq.tasks.translation | example hypothesis: با این وجود ، آن نفرت از آنچه هست هست احساس می‌کرد ، هر چند که به روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی روشنی و احساس می‌کرد که از آن محقق می‌شود.
+2022-06-07 14:13:14 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 033 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.62s/it]
+                                                                      2022-06-07 14:13:14 | INFO | valid | epoch 033 | valid on 'valid' subset | loss 10.036 | nll_loss 8.887 | ppl 473.3 | bleu 2.06 | wps 1415.3 | wpb 2166.7 | bsz 133.3 | num_updates 5841 | best_bleu 2.06
+2022-06-07 14:13:14 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:13:27 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint33.pt (epoch 33 @ 5841 updates, score 2.06) (writing took 13.254101739999896 seconds)
+2022-06-07 14:13:27 | INFO | fairseq_cli.train | end of epoch 33 (average epoch stats below)
+2022-06-07 14:13:27 | INFO | train | epoch 033 | loss 4.959 | nll_loss 3.296 | ppl 9.82 | wps 4785.6 | ups 1.63 | wpb 2940.7 | bsz 169.5 | num_updates 5841 | lr 0.000413768 | gnorm 1.98 | train_wall 90 | wall 3527
+epoch 034:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:13:27 | INFO | fairseq.trainer | begin training epoch 34
+epoch 034:  99% 176/177 [01:30<00:00,  1.93it/s, loss=4.865, nll_loss=3.179, ppl=9.06, wps=5709.8, ups=1.96, wpb=2909.8, bsz=161.2, num_updates=6000, lr=0.000408248, gnorm=2.042, train_wall=51, wall=3608]2022-06-07 14:14:58 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 034 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:14:59 | INFO | fairseq.tasks.translation | example hypothesis: خدا رو شکر که در تمام مدت شب بدن بدن مرا آزار می‌داد.
+2022-06-07 14:14:59 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 034 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.24s/it]2022-06-07 14:15:01 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام که فرانسویان به هم فشرده بودند و گاه در کنار هم نشسته بودند و با عجله از آنان جدا شدند.
+2022-06-07 14:15:01 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 034 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.45s/it]2022-06-07 14:15:03 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، آن نفرت از آنچه که هست هست احساس می‌کرد ، به نظر می‌رسید که وی احساس می‌کرد که جز تنش تنش تنش تنش و شادی ، وابسته به وجود نمی‌آورد.
+2022-06-07 14:15:03 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 034 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.74s/it]
+                                                                      2022-06-07 14:15:03 | INFO | valid | epoch 034 | valid on 'valid' subset | loss 10.131 | nll_loss 8.981 | ppl 505.2 | bleu 1.88 | wps 1285.4 | wpb 2166.7 | bsz 133.3 | num_updates 6018 | best_bleu 2.06
+2022-06-07 14:15:03 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:15:12 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint34.pt (epoch 34 @ 6018 updates, score 1.88) (writing took 8.817808863001119 seconds)
+2022-06-07 14:15:12 | INFO | fairseq_cli.train | end of epoch 34 (average epoch stats below)
+2022-06-07 14:15:12 | INFO | train | epoch 034 | loss 4.801 | nll_loss 3.109 | ppl 8.62 | wps 4984.2 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 6018 | lr 0.000407637 | gnorm 1.962 | train_wall 90 | wall 3631
+epoch 035:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:15:12 | INFO | fairseq.trainer | begin training epoch 35
+epoch 035:  99% 176/177 [01:30<00:00,  1.90it/s, loss=4.618, nll_loss=2.893, ppl=7.43, wps=4655.5, ups=1.52, wpb=3055.5, bsz=181, num_updates=6100, lr=0.000404888, gnorm=1.847, train_wall=52, wall=3674]2022-06-07 14:16:43 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 035 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:16:44 | INFO | fairseq.tasks.translation | example hypothesis: در عین حال من باید سرد و آزار و آزار من بود.
+2022-06-07 14:16:44 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 035 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.25s/it]2022-06-07 14:16:45 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی همه آن گاه گاه با عجله از طریق ازدحام و هیجان و هیجان و پای مسافران از طریق ازدحام و پای یکدیگر به کار می‌برد.
+2022-06-07 14:16:45 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 035 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.45s/it]2022-06-07 14:16:47 | INFO | fairseq.tasks.translation | example hypothesis: اما هر چند که هست ، این اسرار را نمی‌توان تایید کرد که احساس سرزنش سرزنش سرزنش می‌کرد و از آن آگاه است که مورد قبول قرار گیرد.
+2022-06-07 14:16:47 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 035 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.72s/it]
+                                                                      2022-06-07 14:16:48 | INFO | valid | epoch 035 | valid on 'valid' subset | loss 10.278 | nll_loss 9.134 | ppl 561.8 | bleu 1.87 | wps 1302.6 | wpb 2166.7 | bsz 133.3 | num_updates 6195 | best_bleu 2.06
+2022-06-07 14:16:48 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:16:56 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint35.pt (epoch 35 @ 6195 updates, score 1.87) (writing took 8.796669441999256 seconds)
+2022-06-07 14:16:56 | INFO | fairseq_cli.train | end of epoch 35 (average epoch stats below)
+2022-06-07 14:16:56 | INFO | train | epoch 035 | loss 4.63 | nll_loss 2.907 | ppl 7.5 | wps 4977.5 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 6195 | lr 0.000401772 | gnorm 1.914 | train_wall 90 | wall 3736
+epoch 036:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:16:56 | INFO | fairseq.trainer | begin training epoch 36
+epoch 036:  99% 176/177 [01:30<00:00,  1.95it/s, loss=4.396, nll_loss=2.633, ppl=6.21, wps=5659.7, ups=1.94, wpb=2912.4, bsz=166.4, num_updates=6300, lr=0.00039841, gnorm=1.863, train_wall=51, wall=3790]2022-06-07 14:18:27 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 036 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:18:28 | INFO | fairseq.tasks.translation | example hypothesis: قلبم سرشار از غم من بود.
+2022-06-07 14:18:28 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 036 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.26s/it]2022-06-07 14:18:30 | INFO | fairseq.tasks.translation | example hypothesis: در تمام طول این صدا گاه گاه گاه در داخل اتاق ایستاده بودند و آن را به خاموشی که با عجله از دست داده بودند ، خاموشی آن را به خاموشی شتر می‌کردند.
+2022-06-07 14:18:30 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 036 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.42s/it]2022-06-07 14:18:32 | INFO | fairseq.tasks.translation | example hypothesis: اما هر چند که یک از این پرسش که نوشته بود ، در عین عین حال ، از تایید تایید تایید تایید و تمجید تمجید می‌کرد که هیچ یک از آن را به طور کامل مطرح نکرده است.
+2022-06-07 14:18:32 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 036 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.69s/it]
+                                                                      2022-06-07 14:18:32 | INFO | valid | epoch 036 | valid on 'valid' subset | loss 10.369 | nll_loss 9.234 | ppl 601.96 | bleu 2.01 | wps 1335.3 | wpb 2166.7 | bsz 133.3 | num_updates 6372 | best_bleu 2.06
+2022-06-07 14:18:32 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:18:41 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint36.pt (epoch 36 @ 6372 updates, score 2.01) (writing took 8.669788032000724 seconds)
+2022-06-07 14:18:41 | INFO | fairseq_cli.train | end of epoch 36 (average epoch stats below)
+2022-06-07 14:18:41 | INFO | train | epoch 036 | loss 4.49 | nll_loss 2.742 | ppl 6.69 | wps 4991.9 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 6372 | lr 0.000396152 | gnorm 1.883 | train_wall 90 | wall 3840
+epoch 037:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:18:41 | INFO | fairseq.trainer | begin training epoch 37
+epoch 037:  99% 176/177 [01:30<00:00,  1.87it/s, loss=4.286, nll_loss=2.505, ppl=5.67, wps=5575.2, ups=1.95, wpb=2859.6, bsz=164.8, num_updates=6500, lr=0.000392232, gnorm=1.857, train_wall=51, wall=3906]2022-06-07 14:20:11 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 037 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:20:13 | INFO | fairseq.tasks.translation | example hypothesis: رابرت اقرار کرد: من تک‌و تنه‌ام من تک‌و تنه‌ام من ساکت شدم.
+2022-06-07 14:20:13 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 037 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.30s/it]2022-06-07 14:20:14 | INFO | fairseq.tasks.translation | example hypothesis: در چنین ساعتی همه آن‌ها را انبار ساخته بودند و از طریق انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار و پنهانی که بدان دچار دچار اشتباه شده بودند.
+2022-06-07 14:20:14 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 037 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.44s/it]2022-06-07 14:20:16 | INFO | fairseq.tasks.translation | example hypothesis: گرچه کویت نتوانسته است احساس عضویت این ماده را از پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه پایه و واقعیت که هر یک از آن را محقق می‌کند ، تحسین می‌کرد.
+2022-06-07 14:20:16 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 037 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.70s/it]
+                                                                      2022-06-07 14:20:16 | INFO | valid | epoch 037 | valid on 'valid' subset | loss 10.52 | nll_loss 9.408 | ppl 679.13 | bleu 1.79 | wps 1338.8 | wpb 2166.7 | bsz 133.3 | num_updates 6549 | best_bleu 2.06
+2022-06-07 14:20:16 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:20:25 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint37.pt (epoch 37 @ 6549 updates, score 1.79) (writing took 8.746342078999078 seconds)
+2022-06-07 14:20:25 | INFO | fairseq_cli.train | end of epoch 37 (average epoch stats below)
+2022-06-07 14:20:25 | INFO | train | epoch 037 | loss 4.361 | nll_loss 2.59 | ppl 6.02 | wps 4986.8 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 6549 | lr 0.000390762 | gnorm 1.873 | train_wall 90 | wall 3944
+epoch 038:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:20:25 | INFO | fairseq.trainer | begin training epoch 38
+epoch 038:  99% 176/177 [01:30<00:00,  1.96it/s, loss=4.29, nll_loss=2.505, ppl=5.68, wps=5755.2, ups=1.95, wpb=2945, bsz=172.2, num_updates=6700, lr=0.000386334, gnorm=2.028, train_wall=51, wall=4022]2022-06-07 14:21:56 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 038 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:21:57 | INFO | fairseq.tasks.translation | example hypothesis: من کام لا ساکت شدم.
+2022-06-07 14:21:57 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 038 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.29s/it]2022-06-07 14:21:58 | INFO | fairseq.tasks.translation | example hypothesis: پس از شام انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار انبار را شرح می‌داد و اغلب آن‌ها را در یک اتاق تحت کنترل قرار داده بودند.
+2022-06-07 14:21:58 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 038 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.43s/it]2022-06-07 14:22:00 | INFO | fairseq.tasks.translation | example hypothesis: با این همه ، او تایید کرد که نه‌تنها نه‌تنها نه‌تنها نه‌تنها همان طور که تصمیم بگیرد ، اما نتیجه آن را رد و تبدیل به یک انتقاد از مقررات سیاسی و اجتماعی ، مورد انتقاد قرار داد.
+2022-06-07 14:22:00 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 038 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.69s/it]
+                                                                      2022-06-07 14:22:01 | INFO | valid | epoch 038 | valid on 'valid' subset | loss 10.465 | nll_loss 9.347 | ppl 651.35 | bleu 1.87 | wps 1340.4 | wpb 2166.7 | bsz 133.3 | num_updates 6726 | best_bleu 2.06
+2022-06-07 14:22:01 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:22:09 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint38.pt (epoch 38 @ 6726 updates, score 1.87) (writing took 8.770039748000272 seconds)
+2022-06-07 14:22:09 | INFO | fairseq_cli.train | end of epoch 38 (average epoch stats below)
+2022-06-07 14:22:09 | INFO | train | epoch 038 | loss 4.256 | nll_loss 2.465 | ppl 5.52 | wps 4990.5 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 6726 | lr 0.000385586 | gnorm 1.972 | train_wall 90 | wall 4049
+epoch 039:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:22:09 | INFO | fairseq.trainer | begin training epoch 39
+epoch 039:  99% 176/177 [01:30<00:00,  1.98it/s, loss=4.2, nll_loss=2.4, ppl=5.28, wps=5645.9, ups=1.99, wpb=2835.6, bsz=157.5, num_updates=6900, lr=0.000380693, gnorm=1.95, train_wall=50, wall=4138]2022-06-07 14:23:40 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 039 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:23:41 | INFO | fairseq.tasks.translation | example hypothesis: بدون‌اینکه من استاد رو بم بم و هزار گردن من می‌کرد.
+2022-06-07 14:23:41 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 039 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.23s/it]2022-06-07 14:23:43 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام همه حیوانات حیوانات وحشی روی می‌دادند و با شتاب از طریق نقاب نقاب نقاب نقاب آویزان بودند.
+2022-06-07 14:23:43 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 039 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.37s/it]2022-06-07 14:23:45 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، آن همه احساس می‌کرد که جز جز اعتراض اعتراض و اعتراض اعتراض اعتراض اعتراض اعتراض اعتراض ، به آن همه آن ، موجب اعتراض و اعتراض و اعتراض قلبی می‌شود ، بلکه تعدادی از مقررات پست پست پست پست پست پست پست را شامل می‌شود.
+2022-06-07 14:23:45 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 039 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.67s/it]
+                                                                      2022-06-07 14:23:45 | INFO | valid | epoch 039 | valid on 'valid' subset | loss 10.617 | nll_loss 9.504 | ppl 726.14 | bleu 1.93 | wps 1355.8 | wpb 2166.7 | bsz 133.3 | num_updates 6903 | best_bleu 2.06
+2022-06-07 14:23:45 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:23:54 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint39.pt (epoch 39 @ 6903 updates, score 1.93) (writing took 8.7935426439999 seconds)
+2022-06-07 14:23:54 | INFO | fairseq_cli.train | end of epoch 39 (average epoch stats below)
+2022-06-07 14:23:54 | INFO | train | epoch 039 | loss 4.12 | nll_loss 2.307 | ppl 4.95 | wps 4991.6 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 6903 | lr 0.000380611 | gnorm 1.852 | train_wall 90 | wall 4153
+epoch 040:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:23:54 | INFO | fairseq.trainer | begin training epoch 40
+epoch 040:  99% 176/177 [01:30<00:00,  1.92it/s, loss=3.935, nll_loss=2.089, ppl=4.25, wps=4462.2, ups=1.54, wpb=2900, bsz=170.5, num_updates=7000, lr=0.000377964, gnorm=1.881, train_wall=51, wall=4203]2022-06-07 14:25:24 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 040 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:25:25 | INFO | fairseq.tasks.translation | example hypothesis: موهای خودشو در کنار من دوخته بود.
+2022-06-07 14:25:25 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 040 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.24s/it]2022-06-07 14:25:27 | INFO | fairseq.tasks.translation | example hypothesis: آذوقه و جامه‌ها و وسایلی را که اغلب در کناری ایستاده بودند و با برتری برتری برتری را به عرض رسانده بودند ، در چنین کلمات را هم فشرده بودند.
+2022-06-07 14:25:27 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 040 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.42s/it]2022-06-07 14:25:29 | INFO | fairseq.tasks.translation | example hypothesis: با این همه ، آن نفرت و حرارت حرارت حرارت آن را حس می‌کرد که وابسته به اصول اخلاقی ، گرچه گرچه هر چند گیج شده بود ، بلکه تجدید نظر نظر نظر نظر نظر و عضو آن را به انجام می‌داد.
+2022-06-07 14:25:29 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 040 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.70s/it]
+                                                                      2022-06-07 14:25:29 | INFO | valid | epoch 040 | valid on 'valid' subset | loss 10.732 | nll_loss 9.633 | ppl 794.14 | bleu 1.93 | wps 1322.5 | wpb 2166.7 | bsz 133.3 | num_updates 7080 | best_bleu 2.06
+2022-06-07 14:25:29 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:25:38 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint40.pt (epoch 40 @ 7080 updates, score 1.93) (writing took 8.702168144000098 seconds)
+2022-06-07 14:25:38 | INFO | fairseq_cli.train | end of epoch 40 (average epoch stats below)
+2022-06-07 14:25:38 | INFO | train | epoch 040 | loss 4.025 | nll_loss 2.195 | ppl 4.58 | wps 4996.3 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 7080 | lr 0.000375823 | gnorm 1.881 | train_wall 90 | wall 4257
+epoch 041:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:25:38 | INFO | fairseq.trainer | begin training epoch 41
+epoch 041:  99% 176/177 [01:30<00:00,  1.92it/s, loss=3.894, nll_loss=2.043, ppl=4.12, wps=5741.5, ups=1.94, wpb=2962.2, bsz=173, num_updates=7200, lr=0.000372678, gnorm=1.897, train_wall=51, wall=4319]2022-06-07 14:27:08 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 041 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:27:10 | INFO | fairseq.tasks.translation | example hypothesis: موهای خودشو توی بدنم دراز شده بود.
+2022-06-07 14:27:10 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 041 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.21s/it]2022-06-07 14:27:11 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام که ب در داخل یک ردیف ردیف حیوانات حیوانات قرار می‌گرفت و از دست رفته بودند.
+2022-06-07 14:27:11 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 041 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.33s/it]2022-06-07 14:27:13 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، هر یک از کسانی که می‌توانست کویت را تهدید کند ، فرض کرد که نه‌تنها ب - - از ذکر شده بود ، اما قانون اساسی یک مشاور حقوقی که قادر به تفسیر آثار موسیقی است ، وابسته به تفسیر قوانین سیاسی و جهاد ، مورد سرزنش قرار دهد.
+2022-06-07 14:27:13 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 041 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.58s/it]
+                                                                      2022-06-07 14:27:13 | INFO | valid | epoch 041 | valid on 'valid' subset | loss 10.794 | nll_loss 9.701 | ppl 832.23 | bleu 1.69 | wps 1439.1 | wpb 2166.7 | bsz 133.3 | num_updates 7257 | best_bleu 2.06
+2022-06-07 14:27:13 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:27:22 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint41.pt (epoch 41 @ 7257 updates, score 1.69) (writing took 8.756105681000918 seconds)
+2022-06-07 14:27:22 | INFO | fairseq_cli.train | end of epoch 41 (average epoch stats below)
+2022-06-07 14:27:22 | INFO | train | epoch 041 | loss 3.935 | nll_loss 2.091 | ppl 4.26 | wps 5004.7 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 7257 | lr 0.000371212 | gnorm 1.912 | train_wall 90 | wall 4361
+epoch 042:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:27:22 | INFO | fairseq.trainer | begin training epoch 42
+epoch 042:  99% 176/177 [01:30<00:00,  2.00it/s, loss=3.859, nll_loss=2.002, ppl=4, wps=5667.7, ups=1.93, wpb=2941.8, bsz=159.3, num_updates=7400, lr=0.000367607, gnorm=1.861, train_wall=52, wall=4435]2022-06-07 14:28:53 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 042 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:28:54 | INFO | fairseq.tasks.translation | example hypothesis: رابرت ردایش را پوشیده بود و من کام لا ساکت شدم.
+2022-06-07 14:28:54 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 042 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.22s/it]2022-06-07 14:28:55 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام همه حیوانات خرد خرد می‌شدند و با لذتی که اغلب از طریق پیانو ساخته بودند جواب می‌دادند:
+2022-06-07 14:28:55 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 042 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.36s/it]2022-06-07 14:28:57 | INFO | fairseq.tasks.translation | example hypothesis: هر چند که این طور باشد ، به طور کامل به آن صمیمیت و نامه‌های پست پست پست پست پست پست می‌کرد ، ولی عملکرد او را از دست داده بود که هر یک از اصول اخلاقی و فرض بر خلاف قانون اساسی ، به طور کلی جز آن ، به طور کامل به عمل آورد.
+2022-06-07 14:28:57 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 042 | valid on 'valid' subset: 100% 3/3 [00:04<00:00,  1.65s/it]
+                                                                      2022-06-07 14:28:57 | INFO | valid | epoch 042 | valid on 'valid' subset | loss 10.858 | nll_loss 9.762 | ppl 868.2 | bleu 1.85 | wps 1368.8 | wpb 2166.7 | bsz 133.3 | num_updates 7434 | best_bleu 2.06
+2022-06-07 14:28:57 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:29:06 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint42.pt (epoch 42 @ 7434 updates, score 1.85) (writing took 8.80804317700131 seconds)
+2022-06-07 14:29:06 | INFO | fairseq_cli.train | end of epoch 42 (average epoch stats below)
+2022-06-07 14:29:06 | INFO | train | epoch 042 | loss 3.844 | nll_loss 1.984 | ppl 3.96 | wps 4986.2 | ups 1.7 | wpb 2940.7 | bsz 169.5 | num_updates 7434 | lr 0.000366766 | gnorm 1.845 | train_wall 90 | wall 4466
+epoch 043:   0% 0/177 [00:00<?, ?it/s]2022-06-07 14:29:06 | INFO | fairseq.trainer | begin training epoch 43
+epoch 043:  99% 176/177 [01:30<00:00,  2.01it/s, loss=3.801, nll_loss=1.935, ppl=3.82, wps=5762.8, ups=1.96, wpb=2933.7, bsz=167.3, num_updates=7600, lr=0.000362738, gnorm=1.861, train_wall=51, wall=4551]2022-06-07 14:30:37 | INFO | fairseq_cli.train | begin validation on "valid" subset
+
+epoch 043 | valid on 'valid' subset:   0% 0/3 [00:00<?, ?it/s]2022-06-07 14:30:38 | INFO | fairseq.tasks.translation | example hypothesis: شتر من برایم سخت دوست‌داشتنی بود.
+2022-06-07 14:30:38 | INFO | fairseq.tasks.translation | example reference: رحیل در کنار من نشسته و با لباسی فاخر خود را به رخ می‌کشید.
+
+epoch 043 | valid on 'valid' subset:  33% 1/3 [00:01<00:02,  1.31s/it]2022-06-07 14:30:40 | INFO | fairseq.tasks.translation | example hypothesis: در آن هنگام همه حیوانات حیوانات وحشی که از تصورات تصورات تصورات تصورات تصورات دور در می‌آمد با لذتی که به آن‌ها بدهند و در کیف کیف کیف کیف می‌کرد.
+2022-06-07 14:30:40 | INFO | fairseq.tasks.translation | example reference: آن‌ها به مزرعه‌ای به UNKNOWNTOKENINREF که در UNKNOWNTOKENINREF قرار داشت سر زدند و صاحب مزرعه بدون هیچ پرسشی بلافاصله UNKNOWNTOKENINREF کرده بود.
+
+epoch 043 | valid on 'valid' subset:  67% 2/3 [00:02<00:01,  1.46s/it]2022-06-07 14:30:42 | INFO | fairseq.tasks.translation | example hypothesis: با این حال ، به نظر هر یک از کسانی که انتخاب شد مبنی بر‌اینکه وی را به طور کلی پوشش می‌دهد ، اما خنثی کردن آن را به طور کلی از نظر رساند ، گرچه گرچه مورد نظر شیخ یاسین فکر می‌کند که نتیجه نظر با یک مشاور هست که رفتار و رفتار ، نگرانی نیز هست.
+2022-06-07 14:30:42 | INFO | fairseq.tasks.translation | example reference: به دنبال آن شیخ الازهر این موضوع را رد کرد که چنین فتوایی نشان‌دهنده موضع وی است و گفت که این فتوا نظر شخصی یکی از اعضای کمیته ملی فتوای الازهر است و در نتیجه هیچ ارتباطی با موضع رسمی الازهر ندارد.
+
+epoch 043 | valid on 'valid' subset: 100% 3/3 [00:05<00:00,  1.79s/it]
+                                                                      2022-06-07 14:30:42 | INFO | valid | epoch 043 | valid on 'valid' subset | loss 10.981 | nll_loss 9.898 | ppl 954.03 | bleu 1.59 | wps 1263.4 | wpb 2166.7 | bsz 133.3 | num_updates 7611 | best_bleu 2.06
+2022-06-07 14:30:42 | INFO | fairseq_cli.train | early stop since valid performance hasn't improved for last 10 runs
+2022-06-07 14:30:42 | INFO | fairseq_cli.train | begin save checkpoint
+2022-06-07 14:30:51 | INFO | fairseq.checkpoint_utils | saved checkpoint checkpoints/checkpoint43.pt (epoch 43 @ 7611 updates, score 1.59) (writing took 8.745860659000755 seconds)
+2022-06-07 14:30:51 | INFO | fairseq_cli.train | end of epoch 43 (average epoch stats below)
+2022-06-07 14:30:51 | INFO | train | epoch 043 | loss 3.755 | nll_loss 1.881 | ppl 3.68 | wps 4978.7 | ups 1.69 | wpb 2940.7 | bsz 169.5 | num_updates 7611 | lr 0.000362476 | gnorm 1.833 | train_wall 90 | wall 4570
+2022-06-07 14:30:51 | INFO | fairseq_cli.train | done training in 4570.1 seconds
